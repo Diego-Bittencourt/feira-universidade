@@ -37,6 +37,8 @@ export default {
 
         //creating the tasks array
         const inscritos = [];
+        const emailInscritos = [];
+        const nomeInscritos = [];
 
         //looping through the fetched data and adding each task to the tasks array
         for (const key in responseData) {
@@ -49,9 +51,14 @@ export default {
             };
 
             inscritos.push(aluno);
+            emailInscritos.push(responseData[key].email);
+            nomeInscritos.push(responseData[key].fullName);
+            
         } //end of for loop
 
         context.commit('setInscritosList', inscritos);
+        context.commit('setEmailInscritos', emailInscritos);
+        context.commit('setNomeInscritos', nomeInscritos);
     },
     async fetchAllUsers(context) {
         //grab the token

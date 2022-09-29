@@ -1,23 +1,20 @@
 <template>
-<base-card>
-<auth-log v-if="!isLoggedIn"></auth-log>
-  <div v-if="isLoggedIn">
-  <h1>Welcome, {{ userName }}.</h1>
-  <p>
-    This is the task platform to enhance the communication with the school
-    staff.
-  </p>
-  </div>
+  <base-card>
+    <div>
+      <h1>Bem vindo</h1>
+      <p>
+        Este é o website dedicado ao evento da Feira das Universidades,
+        realizado pela Escola Alegria de Saber - EAS. Líder em educação
+        brasileira voltada para brasileiros.
+      </p>
+      <p>Reconhecida pelo MEC</p>
+    </div>
   </base-card>
-  
 </template>
 
 <script>
-import AuthLog from '../components/auth/AuthLog.vue';
 export default {
-  components: {
-    AuthLog
-  },
+  
   computed: {
     userName() {
       return this.$store.getters.getUserName;
@@ -25,7 +22,18 @@ export default {
     },
     isLoggedIn() {
       return this.$store.getters.isLoggedIn;
-    }
+    },
   },
 };
 </script>
+
+<style scoped>
+h1 {
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+}
+
+p {
+  text-align: justify;
+}
+</style>

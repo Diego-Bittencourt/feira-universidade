@@ -1,10 +1,12 @@
 <template>
   <the-header></the-header>
+  <div class="main">
   <router-view v-slot="slotProps">
     <transition name="route" mode="out-in">
       <component :is="slotProps.Component"></component>
     </transition>
   </router-view>
+  </div>
 </template>
 
 <script>
@@ -29,6 +31,7 @@ body {
   /* width: 80%; */
   min-width: 300px;
   margin: 0 auto;
+  
 }
 
 * {
@@ -51,6 +54,15 @@ a:visited {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.main {
+  padding: 5rem 3rem;
+  height: calc(100vh - 70px);
+  background-image: url("./assets/panel1.jpg");
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
 }
 
 ul,

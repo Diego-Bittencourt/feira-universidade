@@ -4,5 +4,11 @@ export default {
     },
     setAllUsers(state, payload) {
         state.allUsers = payload;
+    },
+    setEmailInscritos(state, payload) {
+        state.emailInscritos = payload;
+    },
+    setNomeInscritos(state, payload) {
+        state.nomeInscritos = payload;
     }
 }

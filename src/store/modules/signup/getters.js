@@ -2,7 +2,10 @@ export default {
     getInscritos(state) {
         return state.inscritos;
     },
-    getAllUsers(state) {
-        return state.allUsers;
+    getEmailInscritos(state) {
+        return state.emailInscritos;
+    },
+    getNomeInscritos(state) {
+        return state.nomeInscritos;
     }
 }

@@ -7,10 +7,11 @@
   </base-card>
   <base-card v-if="!msgSent && !isLoading">
     <transition name="msgform">
-      <form @submit.prevent="createMessage">
+      <form @submit.prevent="createInscrito">
         <div class="form-control">
           <label for="fullName">Nome Completo:</label>
-          <input type="fullName" v-model.trim="fullName" />
+          <input type="fullName" v-model.trim="fullName" @input="validateFullName"/>
+          <p v-if="!fullNameIsValid" class="errors">Este nome já foi cadastrado.</p>
         </div>
         <div class="form-control">
           <label for="receiver">Qual escola você frequenta?</label>
@@ -29,15 +30,17 @@
           <input
             type="email"
             placeholder="algo@algumlugar.server"
-            v-model="email"
+            v-model.trim="email"
+            @input="validateEmail"
           />
+           <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
         </div>
         <p class="errors" v-if="!formIsValid">
           Please enter a valid message, title and receiver.
         </p>
         <div class="actions">
           <!-- <base-button simplebutton>Send Message</base-button> -->
-          <base-button simplebutton>Submit</base-button>
+          <base-button simplebutton>Cadastrar</base-button>
         </div>
       </form>
     </transition>
@@ -55,10 +58,29 @@ export default {
       formIsValid: true,
       isLoading: false,
       msgSent: false,
+      emailIsValid: true,
+      fullNameIsValid: true
     };
   },
+  computed: {
+    allEmailInscritos() {
+      return this.$store.getters["signup/getEmailInscritos"];
+    },
+    allNomeInscritos() {
+      return this.$store.getters["signup/getNomeInscritos"];
+    },
+    allInscritos() {
+      return this.$store.getters["signup/getInscritos"];
+    }
+  },
   methods: {
-    createMessage() {
+    validateEmail() {
+      this.emailIsValid = true;
+    },
+    validateFullName() {
+      this.fullNameIsValid = true;
+    },
+    createInscrito() {
       //setting load page
       this.isLoading = true;
 
@@ -68,17 +90,36 @@ export default {
       //validating form
       if (this.fullName === "" || this.school === "" || this.email === "") {
         this.formIsValid = false;
+        this.isLoading = false;
         return;
       }
 
+      //check if the email is already subscribed
+      let emails = this.allEmailInscritos;
+      if (emails.includes(this.email)) {
+        this.emailIsValid = false;
+        this.isLoading = false;
+        return
+      }
+
+      //chekc if the user is already subscribed
+      let names = this.allNomeInscritos;
+      if (names.includes(this.fullName)) {
+        this.fullNameIsValid = false;
+        this.isLoading = false;
+        return
+      }
+
+
+
+      console.log("isso nao é pra aparecer")
       //creating and assigning date
       let currentDate = new Date();
       let month = currentDate.getMonth() + 1;
       this.signDate =
         currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
 
-      //close form
-      this.isFormVisible = false;
+      
 
       const newsignup = {
         date: this.signDate,

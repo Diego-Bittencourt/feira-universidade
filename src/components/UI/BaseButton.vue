@@ -2,7 +2,7 @@
     <router-link v-if="link" :to="to">
         <slot></slot>
     </router-link>
-    <button v-else>
+    <button v-else class="normalbtn">
         <slot></slot>
     </button>
 </template>
@@ -53,5 +53,34 @@ a:hover {
   color: #111111;
   transition: 0.5s;
   border-bottom-color: #143f0180;
+}
+
+.normalbtn {
+  border-color: #111a0d80;
+}
+
+.normalbtn:hover {
+  color: rgb(208, 208, 208);
+  background-color: rgb(34, 34, 34);
+  border-color: rgb(208, 208, 208);
+}
+
+.normalbtn:active {
+  transform: scale(0.85);
+}
+
+@media screen and (max-width: 740px) {
+  a,
+  button {
+    padding: 0.3rem;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  a,
+  button {
+    padding: 0.3rem;
+    min-width: 50px;
+  }
 }
 </style>

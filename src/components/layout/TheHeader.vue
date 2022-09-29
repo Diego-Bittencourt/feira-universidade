@@ -68,4 +68,28 @@ ul {
     font-size: 2.8rem;
     margin-left: 2rem;
 }
+
+@media screen and (max-width: 740px) {
+  .slogan {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .slogan {
+    display: none;
+    }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  header {
+    padding: 0.3rem;
+  }
+
+  nav {
+    width: 95%;
+  }
+}
 </style>
