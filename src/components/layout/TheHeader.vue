@@ -1,10 +1,10 @@
 <template>
     <header>
         <nav>
-            <img src="../../assets/top.png" @click="backTop">
+            <img src="../../assets/logo.png" @click="backTop">
             <ul>
-                <base-button to="/tasklist" link><li><h1>Tasks</h1></li></base-button>
-                <base-button to="/messages" link><li><h1>Messages</h1></li></base-button>
+                <base-button to="/" link><li><h1>Início</h1></li></base-button>
+                <base-button to="/form" link><li><h1>Inscrição</h1></li></base-button>
             </ul>
         </nav>
     </header>
@@ -23,8 +23,7 @@ export default {
 <style scoped>
 header {
     width: 100vw;
-    background-color: #006172;
-    color: #e6e6e6;
+    color: #2c2c2c;
     padding: 1rem;
     
 }
@@ -38,8 +37,8 @@ nav {
 }
 
 img {
-    width: 200px;
-    height: auto;
+    width: auto;
+    height: 50px;
 }
 
 ul {

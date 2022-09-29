@@ -33,7 +33,6 @@ button {
   cursor: pointer;
   text-align: center;
   color: #272525;
-  background-color: #dddddd;
   border-radius: 5px;
   border: 2px solid transparent;
   display: flex;
@@ -46,14 +45,13 @@ button {
 
 button:active,
 a:active {
-  transform: scale(0.8);
+  background-color: rgba(105, 104, 104, 0.485);
 }
 
 button:hover,
 a:hover {
   color: #111111;
   transition: 0.5s;
-  border-color: #06013f;
-  background-color: #999;
+  border-bottom-color: #143f0180;
 }
 </style>

@@ -1,32 +1,28 @@
 <template>
   <base-card>
-    <base-button @click="toggleForm">
-      <span v-if="!isFormVisible">Send Message</span>
-      <span v-else>Close</span>
-    </base-button>
+    
     <transition name="msgform">
-    <form @submit.prevent="createMessage" v-if="isFormVisible">
+    <form @submit.prevent="createMessage">
       <div class="form-control">
-        <label for="receiver">Send a message to:</label>
-        <select name="receiver" id="receiver" v-model="messageReceiver">
+        <label for="fullName">Nome Completo:</label>
+        <input type="fullName" v-model.trim="fullName" />
+      </div>
+      <div class="form-control">
+        <label for="receiver">Qual escola você frequenta?</label>
+        <select name="receiver" id="receiver" v-model="school">
           <option disabled value="">Select one ...</option>
-          <option v-for="user in getAllUsers" 
-          :key="user.userName" 
-          :value="user.userName">{{user.userName}}</option>
+          <option value="toyota">EAS Toyota</option>
+          <option value="hekinan">EAS Hekinan</option>
+          <option value="suzuka">EAS Suzuka</option>
+          <option value="hamamatsu">EAS Hamamatsu</option>
+          <option value="toyohashi">EAS Toyohashi</option>
           
         </select>
       </div>
+      
       <div class="form-control">
-        <label for="messagetitle">Title</label>
-        <input type="messagetitle" v-model="messageTitle" />
-      </div>
-      <div class="form-control">
-        <label for="messagecontent">Message</label>
-        <textarea
-          id="messagecontent"
-          rows="5"
-          v-model.trim="messageContent"
-        ></textarea>
+        <label for="email">Email para contato</label>
+        <input type="email" placeholder="algo@algumlugar.server">
       </div>
       <p class="errors" v-if="!formIsValid">
         Please enter a valid message, title and receiver.
@@ -45,11 +41,10 @@ export default {
   data() {
     return {
       messageContent: "",
-      messageTitle: "",
-      messageReceiver: "",
+      fullName: "",
+      school: "",
       messageDate: "",
       formIsValid: true,
-      isFormVisible: false,
     };
   },
   created() {

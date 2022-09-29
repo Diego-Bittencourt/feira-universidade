@@ -1,29 +1,14 @@
 <template>
 <div>
   <message-form @messageSent="loadMessages"></message-form>
-  <base-card v-if="!iMessagesListEmpty">Sorry, no messages to show.</base-card>
-  <h1 v-if="isLoading">Loading...</h1>
-  <ul v-if="!isLoading">
-    <transition-group name="msglist" tag="ul">
-    <message-item
-      v-for="message in getMessages"
-      :key="message.id"
-      :sender="message.messageAuthor"
-      :msgcontent="message.messageContent"
-      :date="message.messageDate"
-      :title="message.messageTitle"
-    ></message-item>
-    </transition-group>
-  </ul>
+  
   </div>
 </template>
 
 <script>
-import MessageItem from "../../components/messages/MessageItem.vue";
 import MessageForm from "../../components/messages/MessageForm.vue";
 export default {
   components: {
-    MessageItem,
     MessageForm,
   },
   data() {

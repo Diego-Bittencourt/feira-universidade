@@ -29,7 +29,7 @@ const router = createRouter({
             component: RegisterUser
         },
         {
-            path: '/messages',
+            path: '/form',
             component: MessagePage
         }
     ]
