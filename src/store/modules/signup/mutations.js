@@ -1,6 +1,6 @@
 export default {
-    setMessagesList(state, payload) {
-        state.messages = payload;
+    setInscritosList(state, payload) {
+        state.inscritos = payload;
     },
     setAllUsers(state, payload) {
         state.allUsers = payload;

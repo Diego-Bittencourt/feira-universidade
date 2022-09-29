@@ -1,7 +1,7 @@
 <template>
 <div>
   <message-form @messageSent="loadMessages"></message-form>
-  
+  {{getInscritos}}
   </div>
 </template>
 
@@ -17,28 +17,21 @@ export default {
     };
   },
   created() {
-    this.loadMessages();
+    this.fetchInscritos();
   },
   computed: {
-    getMessages() {
-      return this.$store.getters["messages/getMessages"];
-    },
-    iMessagesListEmpty() {
-      return Object.keys(this.getMessages).length;
-    },
-    getUserName() {
-      return this.$store.getters.getUserName;
-    },
+    getInscritos() {
+      return this.$store.getters["signup/getInscritos"];
+    }
   },
   methods: {
-    async loadMessages() {
+    async fetchInscritos() {
       //setting page to loading
       this.isLoading = true;
-      let userName = this.getUserName;
-
+      
       try {
         //fetching messages from firebase
-        await this.$store.dispatch("messages/getMessages", userName);
+        await this.$store.dispatch("signup/fetchInscritos");
       } catch (error) {
         this.error = error.message || "Something went wrong";
       } // end of the catch

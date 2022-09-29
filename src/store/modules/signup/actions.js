@@ -1,17 +1,15 @@
 export default {
-    async addMessage(context, payload) {
+    async signupStudent(context, payload) {
 
-        //grab the token
-        const token = context.rootGetters.token;
-
+        
         //creating the object
-        const newMessage = payload;
+        const newsignup = payload;
     
         //create the post
-        const response = await fetch(`https://rainbow-task-default-rtdb.asia-southeast1.firebasedatabase.app/messages/${payload.receiver}.json?auth=${token}`,
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/inscritos.json`,
             {
                 method: "POST",
-                body: JSON.stringify(newMessage)
+                body: JSON.stringify(newsignup)
             }
         );
 
@@ -22,16 +20,11 @@ export default {
               throw error;
         }
     },
-    async getMessages(context, payload) {
+    async fetchInscritos(context) {
 
-        //grab the token
-        const token = context.rootGetters.token;
-
-        //get username
-        let userName = payload;
-
+    
         //create the fetch
-        const response = await fetch(`https://rainbow-task-default-rtdb.asia-southeast1.firebasedatabase.app/messages/${userName}.json?auth=${token}`);
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/inscritos.json`);
 
         //accessing the fetched data's response
         const responseData = await response.json();
@@ -43,23 +36,22 @@ export default {
         }
 
         //creating the tasks array
-        const messages = [];
+        const inscritos = [];
 
         //looping through the fetched data and adding each task to the tasks array
         for (const key in responseData) {
-            const msg = {
+            const aluno = {
                 id: key,
-                messageContent: responseData[key].content,
-                messageAuthor: responseData[key].author,
-                messageDate: responseData[key].date,
-                messageReceiver: responseData[key].receiver,
-                messageTitle: responseData[key].title
+                fullName: responseData[key].fullName,
+                email: responseData[key].email,
+                school: responseData[key].school,
+                date: responseData[key].date
             };
 
-            messages.push(msg);
+            inscritos.push(aluno);
         } //end of for loop
 
-        context.commit('setMessagesList', messages);
+        context.commit('setInscritosList', inscritos);
     },
     async fetchAllUsers(context) {
         //grab the token

@@ -16,6 +16,8 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Oswald:wght@500&display=swap');
+
 html {
   font-size: 62.5%;
 }

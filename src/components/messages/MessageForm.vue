@@ -1,37 +1,45 @@
 <template>
-  <base-card>
-    
+  <base-card v-if="msgSent && !isLoading">
+    <div class="msgwrapper">
+      <h2>Inscrição efetuada com sucesso.</h2>
+      <hr/>
+    </div>
+  </base-card>
+  <base-card v-if="!msgSent && !isLoading">
     <transition name="msgform">
-    <form @submit.prevent="createMessage">
-      <div class="form-control">
-        <label for="fullName">Nome Completo:</label>
-        <input type="fullName" v-model.trim="fullName" />
-      </div>
-      <div class="form-control">
-        <label for="receiver">Qual escola você frequenta?</label>
-        <select name="receiver" id="receiver" v-model="school">
-          <option disabled value="">Select one ...</option>
-          <option value="toyota">EAS Toyota</option>
-          <option value="hekinan">EAS Hekinan</option>
-          <option value="suzuka">EAS Suzuka</option>
-          <option value="hamamatsu">EAS Hamamatsu</option>
-          <option value="toyohashi">EAS Toyohashi</option>
-          
-        </select>
-      </div>
-      
-      <div class="form-control">
-        <label for="email">Email para contato</label>
-        <input type="email" placeholder="algo@algumlugar.server">
-      </div>
-      <p class="errors" v-if="!formIsValid">
-        Please enter a valid message, title and receiver.
-      </p>
-      <div class="actions">
-        <!-- <base-button simplebutton>Send Message</base-button> -->
-        <base-button simplebutton>Submit</base-button>
-      </div>
-    </form>
+      <form @submit.prevent="createMessage">
+        <div class="form-control">
+          <label for="fullName">Nome Completo:</label>
+          <input type="fullName" v-model.trim="fullName" />
+        </div>
+        <div class="form-control">
+          <label for="receiver">Qual escola você frequenta?</label>
+          <select name="receiver" id="receiver" v-model="school">
+            <option disabled value="">Select one ...</option>
+            <option value="toyota">EAS Toyota</option>
+            <option value="hekinan">EAS Hekinan</option>
+            <option value="suzuka">EAS Suzuka</option>
+            <option value="hamamatsu">EAS Hamamatsu</option>
+            <option value="toyohashi">EAS Toyohashi</option>
+          </select>
+        </div>
+
+        <div class="form-control">
+          <label for="email">Email para contato</label>
+          <input
+            type="email"
+            placeholder="algo@algumlugar.server"
+            v-model="email"
+          />
+        </div>
+        <p class="errors" v-if="!formIsValid">
+          Please enter a valid message, title and receiver.
+        </p>
+        <div class="actions">
+          <!-- <base-button simplebutton>Send Message</base-button> -->
+          <base-button simplebutton>Submit</base-button>
+        </div>
+      </form>
     </transition>
   </base-card>
 </template>
@@ -40,73 +48,88 @@
 export default {
   data() {
     return {
-      messageContent: "",
+      email: "",
       fullName: "",
       school: "",
-      messageDate: "",
+      signDate: "",
       formIsValid: true,
+      isLoading: false,
+      msgSent: false,
     };
   },
-  created() {
-    this.loadAllUsers();
-  },
   methods: {
-    loadAllUsers() {
-      this.$store.dispatch("messages/fetchAllUsers");
-    },
-    toggleForm() {
-      this.isFormVisible = !this.isFormVisible;
-    },
     createMessage() {
+      //setting load page
+      this.isLoading = true;
+
       //validate form to avoid bugs
       this.formIsValid = true;
 
       //validating form
-      if (
-        this.messageContent === "" ||
-        this.messageTitle === "" ||
-        this.messageReceiver === ""
-      ) {
+      if (this.fullName === "" || this.school === "" || this.email === "") {
         this.formIsValid = false;
         return;
       }
 
       //creating and assigning date
       let currentDate = new Date();
-      this.messageDate =
-        currentDate.getDate() +
-        "/" +
-        currentDate.getMonth() +
-        "/" +
-        currentDate.getFullYear();
+      let month = currentDate.getMonth() + 1;
+      this.signDate =
+        currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
 
       //close form
       this.isFormVisible = false;
 
-      const newMessage = {
-        date: this.messageDate,
-        content: this.messageContent,
-        title: this.messageTitle,
-        receiver: this.messageReceiver,
-        author: this.getUserName,
+      const newsignup = {
+        date: this.signDate,
+        fullName: this.fullName,
+        email: this.email,
+        school: this.school,
       };
 
-      this.$store.dispatch("messages/addMessage", newMessage);
+      this.$store.dispatch("signup/signupStudent", newsignup);
       this.$emit("messageSent");
+
+      this.isLoading = false;  
+
+      this.msgSent = true;
+      setTimeout(() => {
+        this.resetForm();
+      }, 3000);
     },
-  },
-  computed: {
-    getAllUsers() {
-      return this.$store.getters["messages/getAllUsers"];
+    resetForm() {
+      this.$router.push("/");
     },
-    getUserName() {
-      return this.$store.getters.getUserName;
-    }
   },
 };
 </script>
 
 <style scoped>
+
+.msgwrapper {
+  padding: 1.5rem;
+}
+
+hr {
+  border: 0px solid;
+  border-radius: 30px;
+  margin-top: 10px;
+  animation: 3.4s countbar linear;
+  background-color: greenyellow;
+  height: 10px;
+}
+@keyframes countbar {
+  0% {
+    width: 100%;
+  }
+  90% {
+    width: 0%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
 .msgform-enter-from,
 .msgform-leave-to {
   transform: translateY(-30px);
@@ -123,7 +146,6 @@ export default {
 .msgform-enter-active {
   transition: 0.4s all ease-in-out;
 }
-
 
 button {
   margin: 0 auto;

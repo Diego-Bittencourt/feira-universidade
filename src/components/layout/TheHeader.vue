@@ -1,7 +1,10 @@
 <template>
     <header>
         <nav>
+            <div class="topslogan">
             <img src="../../assets/logo.png" @click="backTop">
+            <h1 class="slogan">FEIRA DAS UNIVERSIDADES</h1>
+            </div>
             <ul>
                 <base-button to="/" link><li><h1>Início</h1></li></base-button>
                 <base-button to="/form" link><li><h1>Inscrição</h1></li></base-button>
@@ -49,7 +52,20 @@ ul {
     align-items: center;
     flex: auto;
     font-size: 2rem;
-    max-width: 400px;
+    min-width: 100px;
+    max-width: 300px;
     justify-self: flex-end;
+}
+
+.topslogan {
+    display: flex;
+    align-items: center;
+}
+
+.slogan {
+    /* font-family: 'Bungee Spice', cursive; */
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.8rem;
+    margin-left: 2rem;
 }
 </style>

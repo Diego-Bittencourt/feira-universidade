@@ -1,6 +1,6 @@
 export default {
-    getMessages(state) {
-        return state.messages;
+    getInscritos(state) {
+        return state.inscritos;
     },
     getAllUsers(state) {
         return state.allUsers;
