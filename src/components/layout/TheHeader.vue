@@ -2,7 +2,7 @@
     <header>
         <nav>
             <div class="topslogan">
-            <img src="../../assets/logo.png" @click="backTop">
+            <img src="../../assets/newlogo.png" @click="backTop">
             <h1 class="slogan">FEIRA DAS UNIVERSIDADES</h1>
             </div>
             <ul>

@@ -1,13 +1,12 @@
 <template>
   <base-card>
     <div>
-      <h1>Bem vindo</h1>
+      <h1>Bem-vindos!</h1>
       <p>
-        Este é o website dedicado ao evento da Feira das Universidades,
-        realizado pela Escola Alegria de Saber - EAS. Líder em educação
-        brasileira voltada para brasileiros.
+        Este é o website dedicado ao evento da Feira das Universidades EAS 2022,
+        realizado pelas Escolas Alegria de Saber.
       </p>
-      <p>Reconhecida pelo MEC</p>
+      <p>Reconhecida pelo MEC.</p>
     </div>
   </base-card>
 </template>

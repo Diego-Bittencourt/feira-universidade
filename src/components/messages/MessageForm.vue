@@ -16,13 +16,21 @@
         <div class="form-control">
           <label for="receiver">Qual escola você frequenta?</label>
           <select name="receiver" id="receiver" v-model="school">
-            <option disabled value="">Select one ...</option>
+            <option disabled value="">Escolha uma opção...</option>
             <option value="toyota">EAS Toyota</option>
             <option value="hekinan">EAS Hekinan</option>
             <option value="suzuka">EAS Suzuka</option>
             <option value="hamamatsu">EAS Hamamatsu</option>
             <option value="toyohashi">EAS Toyohashi</option>
+            <option value="none">Não sou mais estudante</option>
+            <option value="outro">Outro</option>
           </select>
+          
+        </div>
+
+        <div class="form-control" v-if="school === 'outro'">
+          <label for="anotherschool">Escreva aqui a escola onde você estuda.</label>
+        <input type="text" id="anotherschool"  v-model.trim="otherSchool"/>
         </div>
 
         <div class="form-control">
@@ -54,6 +62,7 @@ export default {
       email: "",
       fullName: "",
       school: "",
+      otherSchool: "",
       signDate: "",
       formIsValid: true,
       isLoading: false,
@@ -119,7 +128,10 @@ export default {
       this.signDate =
         currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
 
-      
+      //inserting the school input
+      if (this.school === "outro") {
+        this.school = this.otherSchool;
+      }
 
       const newsignup = {
         date: this.signDate,
