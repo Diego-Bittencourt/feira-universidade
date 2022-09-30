@@ -7,7 +7,7 @@ export default {
   async logIn(context, payload) {
     //setting the login API url
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC9yvVF6oOB0ORUImpiSwoRxzrZ5pV6Udc";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBoPunH2d_AOMz-rqNY8fCMkI_UhUIGbGc";
 
     const response = await fetch(url, {
       method: 'POST',
@@ -47,7 +47,7 @@ export default {
     let userEmail = payload.userEmail;
 
     // get method to fetch the users data
-    const response = await fetch(`https://rainbow-task-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${token}`);
+    const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${token}`);
 
     //grab the response from the database
     const responseData = await response.json();
@@ -74,7 +74,7 @@ export default {
 
     //setting the login API url
     let url =
-      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC9yvVF6oOB0ORUImpiSwoRxzrZ5pV6Udc";
+      "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBoPunH2d_AOMz-rqNY8fCMkI_UhUIGbGc";
 
       //sending the data to login API
     const response = await fetch(url, {
@@ -117,7 +117,7 @@ export default {
     let token = payload.token;
 
     //send the user name to database and add to the users array
-    const response = await fetch(`https://rainbow-task-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${token}`, {
+    const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/users.json?auth=${token}`, {
       method: "POST",
       body: JSON.stringify({
         userName: userName,

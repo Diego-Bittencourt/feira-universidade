@@ -70,6 +70,7 @@ export default {
       }
 
       this.isLogIn = true;
+      this.$router.push('/controlpanel');
     },
   },
 };
