@@ -7,11 +7,15 @@
   </base-card>
   <base-card v-if="!msgSent && !isLoading">
   <div class="formbtn">
-    <base-button @click="toggleForm('on')">Individual</base-button>
-    <base-button @click="toggleForm('off')">Escola</base-button>
+    <base-button @click="toggleForm(true)">Individual</base-button>
+    <base-button @click="toggleForm(false)">Escola</base-button>
   </div>
-    <transition name="msgform">
-      <form @submit.prevent="createInscrito">
+  <!-- FORM FOR INDIVIDUAL -->
+    <transition name="msgform" mode="out-in">
+      <form @submit.prevent="createInscrito" v-if="formType">
+        <div class="form-control">
+          <h1>Inscrição individual</h1>
+          </div>
         <div class="form-control">
           <label for="fullName">Nome Completo:</label>
           <input type="fullName" v-model.trim="fullName" @input="validateFullName"/>
@@ -29,14 +33,11 @@
             <option value="none">Não sou mais estudante</option>
             <option value="outro">Outro</option>
           </select>
-          
         </div>
-
         <div class="form-control" v-if="school === 'outro'">
           <label for="anotherschool">Escreva aqui a escola onde você estuda.</label>
         <input type="text" id="anotherschool"  v-model.trim="otherSchool"/>
         </div>
-
         <div class="form-control">
           <label for="email">Email para contato</label>
           <input
@@ -48,7 +49,44 @@
            <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
         </div>
         <p class="errors" v-if="!formIsValid">
-          Please enter a valid message, title and receiver.
+          Por favor, insira os dados corretamente.
+        </p>
+        <div class="actions">
+          <!-- <base-button simplebutton>Send Message</base-button> -->
+          <base-button mode="normalbtn" class="normalbtn">Cadastrar</base-button>
+        </div>
+      </form>
+    <!-- END FORM FOR INDIVIDUAL -->
+    <!-- START SCHOOL FORM -->
+      <form @submit.prevent="createSchoolInscrito" v-else>
+        <div class="form-control">
+          <h1>Inscrição por escola</h1>
+        </div>
+        <div class="form-control">
+          <label for="fullName">Nome da escola:</label>
+          <input type="fullName" v-model.trim="schoolFullName" @input="validateSchoolFullName"/>
+          <p v-if="!schoolFullNameIsValid" class="errors">Esta escola já foi cadastrada.</p>
+        </div>
+        <div class="form-control">
+          <label for="numberStudents">Quantos alunos participarão?</label>
+          <input type="number" v-model.trim="numberStudents">
+        </div>
+        <div class="form-control">
+          <label for="numberTeachers">Quantos professores ou funcionários irão acompanhar os alunos?</label>
+          <input type="number" v-model.trim="numberTeachers">
+        </div>
+        <div class="form-control">
+          <label for="email">Email para contato</label>
+          <input
+            type="email"
+            placeholder="email@servidor.com"
+            v-model.trim="schoolEmail"
+            @input="validateSchoolEmail"
+          />
+           <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
+        </div>
+        <p class="errors" v-if="!formIsValid">
+          Por favor, insira os dados corretamente.
         </p>
         <div class="actions">
           <!-- <base-button simplebutton>Send Message</base-button> -->
@@ -56,6 +94,7 @@
         </div>
       </form>
     </transition>
+    <!-- END SCHOOL FORM -->
   </base-card>
 </template>
 
@@ -63,16 +102,29 @@
 export default {
   data() {
     return {
+      formType: "individual",
+      //Start individual data
       email: "",
       fullName: "",
       school: "",
       otherSchool: "",
+      emailIsValid: true,
+      fullNameIsValid: true,
+      //End individual data
+
+      //Start school date
+      schoolFullName: "",
+      numberStudents: null,
+      numberTeachers: null,
+      schoolEmail: "",
+      schoolFullNameIsValid: true,
+      //End school data
+
       signDate: "",
       formIsValid: true,
       isLoading: false,
       msgSent: false,
-      emailIsValid: true,
-      fullNameIsValid: true
+      
     };
   },
   computed: {
@@ -87,6 +139,12 @@ export default {
     }
   },
   methods: {
+    validateSchoolFullName() {
+      this.schoolFullNameIsValid = true;
+    },
+    toggleForm(method) {
+      this.formType = method;
+    },
     validateEmail() {
       this.emailIsValid = true;
     },
@@ -154,6 +212,64 @@ export default {
     resetForm() {
       this.$router.push("/");
     },
+    createSchoolInscrito() {
+      //setting load page
+      this.isLoading = true;
+
+      //validate form to avoid bugs
+      this.formIsValid = true;
+
+      //validating form
+      if (this.schoolFullName === "" || this.numberStudents === null || this.numberTeachers === null || this.schoolMail === "") {
+        this.formIsValid = false;
+        this.isLoading = false;
+        return;
+      }
+
+      //check if the email is already subscribed
+      let emails = this.allEmailInscritos;
+      if (emails.includes(this.email)) {
+        this.emailIsValid = false;
+        this.isLoading = false;
+        return
+      }
+
+      //chekc if the user is already subscribed
+      let names = this.allNomeInscritos;
+      if (names.includes(this.fullName)) {
+        this.fullNameIsValid = false;
+        this.isLoading = false;
+        return
+      }
+
+      //creating and assigning date
+      let currentDate = new Date();
+      let month = currentDate.getMonth() + 1;
+      this.signDate =
+        currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
+
+      //inserting the school input
+      if (this.school === "outro") {
+        this.school = this.otherSchool;
+      }
+
+      const newsignup = {
+        date: this.signDate,
+        fullName: this.fullName,
+        email: this.email,
+        school: this.school,
+      };
+
+      this.$store.dispatch("signup/signupStudent", newsignup);
+      this.$emit("messageSent");
+
+      this.isLoading = false;  
+
+      this.msgSent = true;
+      setTimeout(() => {
+        this.resetForm();
+      }, 3000);
+    }
   },
 };
 </script>
@@ -162,6 +278,7 @@ export default {
 .formbtn {
   display: flex;
   width: 100%;
+  margin-bottom: 30px;
 }
 
 .msgwrapper {
@@ -188,7 +305,11 @@ hr {
   }
 }
 
-.msgform-enter-from,
+.msgform-enter-from {
+  transform: translateY(30px);
+  opacity: 0;
+}
+
 .msgform-leave-to {
   transform: translateY(-30px);
   opacity: 0;
