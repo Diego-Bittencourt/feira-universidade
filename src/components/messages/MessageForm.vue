@@ -6,6 +6,10 @@
     </div>
   </base-card>
   <base-card v-if="!msgSent && !isLoading">
+  <div class="formbtn">
+    <base-button>Individual</base-button>
+    <base-button>Escola</base-button>
+  </div>
     <transition name="msgform">
       <form @submit.prevent="createInscrito">
         <div class="form-control">
@@ -119,9 +123,6 @@ export default {
         return
       }
 
-
-
-      console.log("isso nao é pra aparecer")
       //creating and assigning date
       let currentDate = new Date();
       let month = currentDate.getMonth() + 1;
@@ -158,6 +159,10 @@ export default {
 </script>
 
 <style scoped>
+.formbtn {
+  display: flex;
+  width: 100%;
+}
 
 .msgwrapper {
   padding: 1.5rem;
