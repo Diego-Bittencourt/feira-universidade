@@ -7,8 +7,8 @@
   </base-card>
   <base-card v-if="!msgSent && !isLoading">
   <div class="formbtn">
-    <base-button>Individual</base-button>
-    <base-button>Escola</base-button>
+    <base-button @click="toggleForm('on')">Individual</base-button>
+    <base-button @click="toggleForm('off')">Escola</base-button>
   </div>
     <transition name="msgform">
       <form @submit.prevent="createInscrito">
@@ -52,7 +52,7 @@
         </p>
         <div class="actions">
           <!-- <base-button simplebutton>Send Message</base-button> -->
-          <base-button simplebutton>Cadastrar</base-button>
+          <base-button mode="normalbtn" class="normalbtn">Cadastrar</base-button>
         </div>
       </form>
     </transition>

@@ -2,7 +2,8 @@
     <router-link v-if="link" :to="to">
         <slot></slot>
     </router-link>
-    <button v-else class="normalbtn">
+    <button v-else :class="mode">
+      {{mode}}
         <slot></slot>
     </button>
 </template>
@@ -20,6 +21,11 @@ export default {
         required: false,
         default: "/",
         },
+        mode: {
+          type: String,
+          required: false,
+          defaul: null
+        }
 }
 }
 </script>
