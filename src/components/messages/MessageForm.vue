@@ -81,7 +81,7 @@
             type="email"
             placeholder="email@servidor.com"
             v-model.trim="schoolEmail"
-            @input="validateSchoolEmail"
+            @input="validateEmail"
           />
            <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
         </div>
@@ -136,9 +136,18 @@ export default {
     },
     allInscritos() {
       return this.$store.getters["signup/getInscritos"];
+    },
+    allSchoolEmail() {
+      return this.$store.getters["signup/getSchoolEmail"];
+    },
+    allSchoolName() {
+      return this.$store.getters["signup/getSchoolName"];
     }
   },
   methods: {
+    resetForm() {
+      this.$router.push("/");
+    },
     validateSchoolFullName() {
       this.schoolFullNameIsValid = true;
     },
@@ -167,13 +176,14 @@ export default {
 
       //check if the email is already subscribed
       let emails = this.allEmailInscritos;
-      if (emails.includes(this.email)) {
+      let schoolEmail = this.allSchoolEmail;
+      if (emails.includes(this.email) || schoolEmail.includes(this.email)) {
         this.emailIsValid = false;
         this.isLoading = false;
         return
       }
 
-      //chekc if the user is already subscribed
+      //check if the user is already subscribed
       let names = this.allNomeInscritos;
       if (names.includes(this.fullName)) {
         this.fullNameIsValid = false;
@@ -209,9 +219,6 @@ export default {
         this.resetForm();
       }, 3000);
     },
-    resetForm() {
-      this.$router.push("/");
-    },
     createSchoolInscrito() {
       //setting load page
       this.isLoading = true;
@@ -228,16 +235,17 @@ export default {
 
       //check if the email is already subscribed
       let emails = this.allEmailInscritos;
-      if (emails.includes(this.email)) {
+      let schoolEmail = this.allSchoolEmail;
+      if (emails.includes(this.schoolEmail) || schoolEmail.includes(this.schoolEmail)) {
         this.emailIsValid = false;
         this.isLoading = false;
         return
       }
 
-      //chekc if the user is already subscribed
-      let names = this.allNomeInscritos;
-      if (names.includes(this.fullName)) {
-        this.fullNameIsValid = false;
+      //check if the school is already subscribed
+      let schoolName = this.allSchoolName;
+      if (schoolName.includes(this.schoolFullName)) {
+        this.schoolFullNameIsValid = false;
         this.isLoading = false;
         return
       }
@@ -253,14 +261,15 @@ export default {
         this.school = this.otherSchool;
       }
 
-      const newsignup = {
-        date: this.signDate,
-        fullName: this.fullName,
-        email: this.email,
-        school: this.school,
+      const newSchool = {
+        schoolFullName: this.schoolFullName,
+        numberStudents: this.numberStudents,
+        numberTeachers: this.numberTeachers,
+        schoolEmail: this.schoolEmail,
+        date: this.signDate
       };
 
-      this.$store.dispatch("signup/signupStudent", newsignup);
+      this.$store.dispatch("signup/signupSchool", newSchool);
       this.$emit("messageSent");
 
       this.isLoading = false;  

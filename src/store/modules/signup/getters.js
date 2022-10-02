@@ -7,5 +7,14 @@ export default {
     },
     getNomeInscritos(state) {
         return state.nomeInscritos;
+    },
+    getSchoolList(state) {
+        return state.schoolList;
+    },
+    getSchoolEmail(state) {
+        return state.schoolEmail;
+    },
+    getSchoolName(state) {
+        return state.schoolName;
     }
 }

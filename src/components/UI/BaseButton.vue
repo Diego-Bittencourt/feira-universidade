@@ -3,7 +3,6 @@
         <slot></slot>
     </router-link>
     <button v-else :class="mode">
-      {{mode}}
         <slot></slot>
     </button>
 </template>

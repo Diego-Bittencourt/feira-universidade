@@ -87,5 +87,60 @@ export default {
         console.log(users);
         context.commit("setAllUsers", users);
   
-      }    
+      },
+      async signupSchool(context, payload) {
+        //creating the object
+        const newsignup = payload;
+    
+        //create the post
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/escolas.json`,
+            {
+                method: "POST",
+                body: JSON.stringify(newsignup)
+            }
+        );
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+            const error = new Error(responseData.message || 'Failed to send request');
+              throw error;
+        }
+      },
+      async fetchEscolas(context) {
+
+    
+        //create the fetch
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/escolas.json`);
+
+        //accessing the fetched data's response
+        const responseData = await response.json();
+
+        //error handling
+        if (!response.ok) {
+            const error = new Error(responseData.message || "Failed to fecth");
+            throw error;
+        }
+
+        //creating the escolas array
+        const schoolList = [];
+        const schoolName = [];
+        const schoolEmail = [];
+
+        //looping through the fetched data and adding each task to the tasks array
+        for (const key in responseData) {
+            const escola = {
+                id: key,
+                schoolFullName: responseData[key].schoolFullName,
+                schoolEmail: responseData[key].schoolEmail,
+            };
+            schoolList.push(escola);
+            schoolEmail.push(responseData[key].schoolEmail);
+            schoolName.push(responseData[key].schoolFullName);
+            
+        } //end of for loop
+        context.commit('setSchoolList', schoolList);
+        context.commit('setSchoolName', schoolName);
+        context.commit('setSchoolEmail', schoolEmail);
+    }    
 }

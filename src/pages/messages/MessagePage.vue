@@ -31,6 +31,7 @@ export default {
       try {
         //fetching messages from firebase
         await this.$store.dispatch("signup/fetchInscritos");
+        await this.$store.dispatch("signup/fetchEscolas");
       } catch (error) {
         this.error = error.message || "Something went wrong";
       } // end of the catch

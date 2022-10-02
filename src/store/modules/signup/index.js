@@ -8,7 +8,10 @@ export default {
         return {
             emailInscritos: [],
             nomeInscritos: [],
-            inscritos: []
+            inscritos: [],
+            schoolList: [],
+            schoolName: [],
+            schoolEmail: []
         }
     },
     mutations: signupMutations,

@@ -10,5 +10,14 @@ export default {
     },
     setNomeInscritos(state, payload) {
         state.nomeInscritos = payload;
+    },
+    setSchoolList(state, payload) {
+        state.schoolList = payload;
+    },
+    setSchoolName(state, payload) {
+        state.schoolName = payload;
+    },
+    setSchoolEmail(state, payload) {
+        state.schoolEmail = payload;
     }
 }
