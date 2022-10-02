@@ -8,7 +8,8 @@
             <ul>
                 
                 <base-button to="/form" link><li><h1>Inscrição</h1></li></base-button>
-                <base-button to="/auth" link><li><h1>Acessar</h1></li></base-button>
+                <base-button to="/auth" link v-if="!isLoggedIn"><li><h1>Acessar</h1></li></base-button>
+                <base-button to="/controlpanel" link v-else><li><h1>Painel</h1></li></base-button>
             </ul>
         </nav>
     </header>
@@ -20,6 +21,11 @@ export default {
         backTop() {
             this.$router.push("/");
         }
+    },
+    computed: {
+      isLoggedIn() {
+        return this.$store.getters.isLoggedIn;
+      }
     }
 }
 </script>

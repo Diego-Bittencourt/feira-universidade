@@ -10,7 +10,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.683);
   padding: 2rem;
   margin: 2rem auto;
-  max-width: 40rem;
+  max-width: 60rem;
   background-color: rgba(255, 253, 253, 0.737);
   transition: 0.3s all ease-in;
   opacity: 0.8;

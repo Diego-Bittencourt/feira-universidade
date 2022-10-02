@@ -17,7 +17,7 @@
       <div class="actions">
         <base-button simplebutton>Login</base-button>
       </div>
-      <h3>Not registered yet? Create an account <router-link to="/register">here</router-link></h3>
+      <!-- <h3>Ainda não tem conta? Clique<router-link to="/register">aqui</router-link></h3> -->
     </form>
   </base-card>
 </template>
