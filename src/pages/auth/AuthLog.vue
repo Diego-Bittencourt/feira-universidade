@@ -1,5 +1,5 @@
 <template>
-  
+  <base-card>
     <form @submit.prevent="logIn">
       <div class="form-control">
         <h2>Login</h2>
@@ -19,7 +19,7 @@
       </div>
       <h3>Not registered yet? Create an account <router-link to="/register">here</router-link></h3>
     </form>
-  
+  </base-card>
 </template>
 
 <script>
@@ -57,6 +57,7 @@ export default {
       }
 
       this.$store.dispatch("toggleLoggedIn");
+      this.$router.push("/controlpanel");
     },
   },
 };

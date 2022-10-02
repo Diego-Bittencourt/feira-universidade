@@ -6,8 +6,9 @@
             <h1 class="slogan">FEIRA DAS UNIVERSIDADES</h1>
             </div>
             <ul>
-                <base-button to="/" link><li><h1>Início</h1></li></base-button>
+                
                 <base-button to="/form" link><li><h1>Inscrição</h1></li></base-button>
+                <base-button to="/auth" link><li><h1>Acessar</h1></li></base-button>
             </ul>
         </nav>
     </header>

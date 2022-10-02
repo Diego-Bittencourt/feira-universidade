@@ -133,6 +133,9 @@ export default {
                 id: key,
                 schoolFullName: responseData[key].schoolFullName,
                 schoolEmail: responseData[key].schoolEmail,
+                date: responseData[key].date,
+                numberStudents: responseData[key].numberStudents,
+                numberTeachers: responseData[key].numberTeachers
             };
             schoolList.push(escola);
             schoolEmail.push(responseData[key].schoolEmail);
