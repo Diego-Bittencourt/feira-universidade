@@ -58,11 +58,12 @@ a:visited {
 
 .main {
   padding: 5rem 3rem;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   background-image: url("./assets/slide.png");
-  background-position: center; /* Center the image */
+  background-position: top center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
+  background-attachment: fixed; /*Fix the image when scrolling*/
 }
 
 ul,

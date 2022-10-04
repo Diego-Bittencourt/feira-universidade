@@ -1,19 +1,25 @@
 <template>
-  <base-card>
-    <div>
-      <h1>Bem-vindos!</h1>
-      <p>
-        Este é o website dedicado ao evento da Feira das Universidades EAS 2022,
-        realizado pelas Escolas Alegria de Saber.
-      </p>
-      <p>Reconhecida pelo MEC.</p>
-    </div>
-  </base-card>
+  <div>
+    <base-card>
+      <div>
+        <h1>Bem-vindos!</h1>
+        <p>
+          Este é o website dedicado ao evento da Feira das Universidades EAS
+          2022, realizado pelas Escolas Alegria de Saber.
+        </p>
+        <p>Reconhecida pelo MEC.</p>
+      </div>
+    </base-card>
+    <universities-list></universities-list>
+  </div>
 </template>
 
 <script>
+import UniversitiesList from "../components/event/UniversitiesList.vue";
 export default {
-  
+  components: {
+    UniversitiesList,
+  },
   computed: {
     userName() {
       return this.$store.getters.getUserName;
