@@ -19,7 +19,7 @@ export default {
   props: ["name", "sigla", "link", "photo"],
   computed: {
     photoLink() {
-      return "../../assets/universities/" + this.photo;
+      return "../../assets/" + this.photo;
     },
   },
 };
@@ -45,5 +45,10 @@ li {
 
 p {
     margin: 1.2rem 0;
+}
+
+img {
+  width: 100px;
+  height: 50px;
 }
 </style>
