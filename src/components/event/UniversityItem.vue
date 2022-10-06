@@ -5,7 +5,7 @@
         <img :src="photoLink" />
       </div>
       <div class="infowrapper">
-        <p>Universidade: {{name}}</p>
+        <p>{{name}}</p>
         <p>
           <a :href="link" target="_blank">
             <base-button>{{sigla}}</base-button>
@@ -38,12 +38,17 @@ li {
 .imgwrapper {
     height: 100%;
     width: auto;
+    margin: auto;
 }
 
 .infowrapper {
      text-align: left;
      padding: 0 1.2rem;
      border-left: 1px solid #ccc;
+}
+
+.infowrapper p:nth-child(1) {
+  font-weight: bold;
 }
 
 p {
