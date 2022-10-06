@@ -1,13 +1,16 @@
 <template>
   <base-card>
-  {{photoLink}}
     <li>
       <div class="imgwrapper">
         <img :src="photoLink" />
       </div>
       <div class="infowrapper">
         <p>Universidade: {{name}}</p>
-        <p>Link: <a :href="link">{{sigla}}</a></p>
+        <p>
+          <a :href="link" target="_blank">
+            <base-button>{{sigla}}</base-button>
+          </a>
+          </p>
 
         </div>
     </li>
@@ -19,7 +22,7 @@ export default {
   props: ["name", "sigla", "link", "photo"],
   computed: {
     photoLink() {
-      return "../../assets/" + this.photo;
+      return "../" + this.photo;
     },
   },
 };
@@ -50,5 +53,9 @@ p {
 img {
   width: 100px;
   height: 50px;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
