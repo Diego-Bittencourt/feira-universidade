@@ -73,11 +73,10 @@ a {
   .infowrapper {
     border-left-color: transparent;
     margin-left: 0;
-    text-align: center;
   }
 
-  p {
-    text-align: center;
+  li {
+    padding: 0.2rem;
   }
 }
 </style>
