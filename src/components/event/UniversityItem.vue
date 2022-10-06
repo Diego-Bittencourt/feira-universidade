@@ -1,5 +1,6 @@
 <template>
   <base-card>
+  {{photoLink}}
     <li>
       <div class="imgwrapper">
         <img :src="photoLink" />

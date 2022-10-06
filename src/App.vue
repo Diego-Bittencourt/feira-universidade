@@ -22,15 +22,16 @@ export default {
 
 html {
   font-size: 62.5%;
+  box-sizing: border-box;
 }
 
 body {
   font-size: 1.6rem;
   line-height: 1.4;
-  /* max-width: 1200px; */
-  /* width: 80%; */
-  min-width: 300px;
-  margin: 0 auto;
+  max-width: 1200px;
+  /* width: 100vw; */
+  /* min-width: 300px; */
+  margin: 0;
   background-image: url("./assets/slide.png");
   background-position: top center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
@@ -63,7 +64,7 @@ a:visited {
 .main {
   padding: 5rem 3rem;
   min-height: calc(100vh - 70px);
-  
+  box-sizing: border-box;
 }
 
 ul,
