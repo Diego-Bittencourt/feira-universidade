@@ -8,7 +8,7 @@
         <p>{{name}}</p>
         <p>
           <a :href="link" target="_blank">
-            <base-button>{{sigla}}</base-button>
+            <base-button mode="normalbtn">{{sigla}}</base-button>
           </a>
           </p>
 
@@ -37,8 +37,8 @@ li {
 
 .imgwrapper {
     height: 100%;
-    width: auto;
-    margin: auto;
+    width: 25%;
+    margin: auto 0;
 }
 
 .infowrapper {
@@ -56,11 +56,28 @@ p {
 }
 
 img {
-  width: 100px;
-  height: 50px;
+  width: 100%;
+  height: auto;
 }
 
 a {
   text-decoration: none;
+}
+
+@media screen and (max-width: 480px) {
+  
+  .imgwrapper {
+    display: none;
+  }
+
+  .infowrapper {
+    border-left-color: transparent;
+    margin-left: 0;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+  }
 }
 </style>

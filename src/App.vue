@@ -31,7 +31,11 @@ body {
   /* width: 80%; */
   min-width: 300px;
   margin: 0 auto;
-  
+  background-image: url("./assets/slide.png");
+  background-position: top center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+  background-attachment: fixed; /*Fix the image when scrolling*/
 }
 
 * {
@@ -59,11 +63,7 @@ a:visited {
 .main {
   padding: 5rem 3rem;
   min-height: calc(100vh - 70px);
-  background-image: url("./assets/slide.png");
-  background-position: top center; /* Center the image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-size: cover; /* Resize the background image to cover the entire container */
-  background-attachment: fixed; /*Fix the image when scrolling*/
+  
 }
 
 ul,
@@ -95,5 +95,11 @@ li {
 
 .route-leave-active {
   transition: all 0.3s ease-in;
+}
+
+@media screen and (max-width: 480px) {
+  .main {
+    padding: 1rem 10px;
+  }
 }
 </style>

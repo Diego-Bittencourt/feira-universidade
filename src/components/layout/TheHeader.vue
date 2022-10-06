@@ -35,7 +35,8 @@ header {
     width: 100vw;
     color: #2c2c2c;
     padding: 1rem;
-    
+    background-color: rgb(255, 255, 255);
+    border-bottom: 5px solid #00000074;
 }
 
 nav {
