@@ -4,7 +4,7 @@
       <h1>Lista de pessoas inscritas individualmente</h1>
       <div class="form-control">
       <label for="searchstudent">Procurar por aluno</label>
-      <input id="searchstudent" placeholder="Procure aqui..." />
+      <input id="searchstudent" placeholder="Procure aqui..." v-model.trim="searchedstudent" />
       </div>
       <table class="table">
         <thead>
@@ -16,7 +16,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="inscrito in inscritosList" :key="inscrito.id">
+          <tr v-for="inscrito in filteredStudentsList" :key="inscrito.id">
             <td>{{ inscrito.fullName }}</td>
             <td>{{ inscrito.school }}</td>
             <td>{{ inscrito.email }}</td>
@@ -54,6 +54,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      searchedstudent: ""
+    }
+  },
   created() {
     this.fetchInscritos();
   },
@@ -74,6 +79,13 @@ export default {
     },
   },
   computed: {
+    filteredStudentsList() {
+      let searched = this.searchedstudent;
+      const list = this.inscritosList;
+
+      return list.filter(student => student.fullName.toLowerCase().includes(searched.toLowerCase()));
+
+    },
     schoolList() {
       return this.$store.getters["signup/getSchoolList"];
     },
