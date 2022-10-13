@@ -90,7 +90,8 @@ export default {
       return this.$store.getters["signup/getSchoolList"];
     },
     inscritosList() {
-      return this.$store.getters["signup/getInscritos"];
+      const inscritosList = this.$store.getters["signup/getInscritos"];
+      return inscritosList.sort((a, b) => a.fullName.localeCompare(b.fullName));
     },
   },
 };
@@ -119,7 +120,7 @@ input {
 
 input:focus {
   outline: none;
-  background-color: #ccc;
+  background-color: rgba(255, 255, 255, 0.69);
   border-color: #229922;
 }
 
@@ -139,11 +140,29 @@ th,
 td {
   border: 1px solid #909090;
   overflow: clip;
+  padding: 1rem 0.2rem;
+}
+
+tr:nth-child(even) {
+  background-color: rgba(230, 230, 230, 0.7);
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+tr:hover {
+  background-color: rgb(106, 105, 143);
+  color: #fff;
 }
 
 @media screen and (max-width: 600px) {
   table {
     font-size: 1rem;
+  }
+
+  td {
+    padding: 0.5rem 0.05rem;
   }
 }
 </style>
