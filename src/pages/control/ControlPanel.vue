@@ -2,6 +2,10 @@
   <div>
     <base-card>
       <h1>Lista de pessoas inscritas individualmente</h1>
+      <div class="form-control">
+      <label for="searchstudent">Procurar por aluno</label>
+      <input id="searchstudent" placeholder="Procure aqui..." />
+      </div>
       <table class="table">
         <thead>
           <tr>
@@ -81,6 +85,32 @@ export default {
 </script>
 
 <style scoped>
+.form-control {
+  margin: 1.6rem 0;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  display: block;
+  width: 100%;
+  font-family: inherit;
+  padding: 0.15rem;
+  border: 1px solid #8a8a8a;
+  background-color: transparent;
+}
+
+input:focus {
+  outline: none;
+  background-color: #ccc;
+  border-color: #229922;
+}
+
 h1 {
   margin-bottom: 2rem;
 }
