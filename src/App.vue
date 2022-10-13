@@ -28,8 +28,8 @@ html {
 body {
   font-size: 1.6rem;
   line-height: 1.4;
-  max-width: 1200px;
-  /* width: 100vw; */
+  /* max-width: 1200px; */
+  width: 100vw;
   /* min-width: 300px; */
   margin: 0 auto;
   background-image: url("./assets/slide.png");
@@ -62,9 +62,11 @@ a:visited {
 }
 
 .main {
-  padding: 5rem 3rem;
-  min-height: calc(100vh - 70px);
+  padding: 5rem 3rem 3rem 0;
+  min-height: calc(100vh - 75px);
   box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 ul,
