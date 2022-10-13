@@ -31,7 +31,7 @@ body {
   max-width: 1200px;
   /* width: 100vw; */
   /* min-width: 300px; */
-  margin: 0;
+  margin: 0 auto;
   background-image: url("./assets/slide.png");
   background-position: top center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
