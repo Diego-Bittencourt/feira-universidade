@@ -37,7 +37,7 @@ header {
     padding: 1rem;
     background-color: rgb(255, 255, 255);
     border-bottom: 5px solid #00000074;
-    margin-left: -20px;
+    /* margin-left: -20px; */
 }
 
 nav {
