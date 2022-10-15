@@ -21,6 +21,7 @@
             <td>{{ inscrito.school }}</td>
             <td>{{ inscrito.email }}</td>
             <td>{{ inscrito.date }}</td>
+            <td><a class="editaritem" href="">Editar</a></td>
           </tr>
         </tbody>
       </table>
@@ -36,6 +37,7 @@
             <th>Professores</th>
             <th>Email</th>
             <th>Data</th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>
@@ -98,6 +100,16 @@ export default {
 </script>
 
 <style scoped>
+.editaritem {
+  text-decoration: none;
+  cursor: default;
+  background-color: #a1000099;
+  color: #fff;
+  padding: 0.15rem;
+  border: 1px solid #aaaaaa99;
+  border-radius: 5px;
+}
+
 .form-control {
   margin: 1.6rem 0;
 }
