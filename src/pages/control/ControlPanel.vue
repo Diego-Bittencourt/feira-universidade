@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{editStudent}}
     <base-card>
       <h1>Lista de pessoas inscritas individualmente</h1>
       <div class="form-control">
@@ -22,7 +23,7 @@
             <td>{{ inscrito.school }}</td>
             <td>{{ inscrito.email }}</td>
             <td>{{ inscrito.date }}</td>
-            <td><a class="editaritem" href="">Editar</a></td>
+            <td><button class="editaritem" @click="editItemStudent(inscrito.fullName, inscrito.school, inscrito.email, inscrito.date)">Editar</button></td>
           </tr>
         </tbody>
       </table>
@@ -48,7 +49,7 @@
             <td>{{ inscrito.numberTeachers }}</td>
             <td>{{ inscrito.schoolEmail }}</td>
             <td>{{ inscrito.date }}</td>
-            <td><a class="editaritem" href="">Editar</a></td>
+            <td><button class="editaritem" @click="editItemSchool(inscrito.schoolFullName, inscrito.numberStudents, inscrito.numberTeachers, inscrito.schoolEmail, inscrito.date)">Editar</button></td>
           </tr>
         </tbody>
       </table>
@@ -60,13 +61,25 @@
 export default {
   data() {
     return {
-      searchedstudent: ""
+      searchedstudent: "",
+      editStudent: {
+        nome: "",
+        escola: "",
+        email: "",
+        data: ""
+      }
     }
   },
   created() {
     this.fetchInscritos();
   },
   methods: {
+    editItemStudent(nome, escola, email, data) {
+      this.editStudent.nome = nome;
+      this.editStudent.escola = escola;
+      this.editStudent.email = email;
+      this.editStudent.data = data;
+    },
     async fetchInscritos() {
       //setting page to loading
       this.isLoading = true;
