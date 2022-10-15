@@ -13,6 +13,7 @@
             <th>Escola</th>
             <th>Email</th>
             <th>Data</th>
+            <th>Editar</th>
           </tr>
         </thead>
         <tbody>
@@ -47,6 +48,7 @@
             <td>{{ inscrito.numberTeachers }}</td>
             <td>{{ inscrito.schoolEmail }}</td>
             <td>{{ inscrito.date }}</td>
+            <td><a class="editaritem" href="">Editar</a></td>
           </tr>
         </tbody>
       </table>
