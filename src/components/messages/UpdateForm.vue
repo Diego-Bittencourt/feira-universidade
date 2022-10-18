@@ -7,11 +7,11 @@
   </base-card>
   <base-card v-if="!msgSent && !isLoading">
   
-  <!-- FORM FOR INDIVIDUAL -->
+  
     <transition name="msgform" mode="out-in">
-      <form @submit.prevent="createInscrito" v-if="formType">
+      <form @submit.prevent="editInscrito">
         <div class="form-control">
-          <h1>Inscrição individual</h1>
+          <h1>Editar informação do participante</h1>
           </div>
         <div class="form-control">
           <label for="fullName">Nome Completo:</label>
@@ -19,7 +19,7 @@
           <p v-if="!fullNameIsValid" class="errors">Este nome já foi cadastrado.</p>
         </div>
         <div class="form-control">
-          <label for="receiver">Qual escola você frequenta?</label>
+          <label for="receiver">A escola que frequenta</label>
           <select name="receiver" id="receiver" v-model="school">
             <option disabled value="">Escolha uma opção...</option>
             <option value="toyota">EAS Toyota</option>
@@ -32,11 +32,11 @@
           </select>
         </div>
         <div class="form-control" v-if="school === 'outro'">
-          <label for="anotherschool">Escreva aqui a escola onde você estuda.</label>
+          <label for="anotherschool">Qual escola?</label>
         <input type="text" id="anotherschool"  v-model.trim="otherSchool"/>
         </div>
         <div class="form-control">
-          <label for="email">Email para contato</label>
+          <label for="email">Email do participante</label>
           <input
             type="email"
             placeholder="algo@algumlugar.server"
@@ -50,53 +50,23 @@
         </p>
         <div class="actions">
           <!-- <base-button simplebutton>Send Message</base-button> -->
-          <base-button mode="normalbtn" class="normalbtn">Cadastrar</base-button>
-        </div>
-      </form>
-    <!-- END FORM FOR INDIVIDUAL -->
-    <!-- START SCHOOL FORM -->
-      <form @submit.prevent="createSchoolInscrito" v-else>
-        <div class="form-control">
-          <h1>Inscrição por escola</h1>
-        </div>
-        <div class="form-control">
-          <label for="fullName">Nome da escola:</label>
-          <input type="fullName" v-model.trim="schoolFullName" @input="validateSchoolFullName"/>
-          <p v-if="!schoolFullNameIsValid" class="errors">Esta escola já foi cadastrada.</p>
-        </div>
-        <div class="form-control">
-          <label for="numberStudents">Quantos alunos participarão?</label>
-          <input type="number" v-model.trim="numberStudents">
-        </div>
-        <div class="form-control">
-          <label for="numberTeachers">Quantos professores ou funcionários irão acompanhar os alunos?</label>
-          <input type="number" v-model.trim="numberTeachers">
-        </div>
-        <div class="form-control">
-          <label for="email">Email para contato</label>
-          <input
-            type="email"
-            placeholder="email@servidor.com"
-            v-model.trim="schoolEmail"
-            @input="validateEmail"
-          />
-           <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
-        </div>
-        <p class="errors" v-if="!formIsValid">
-          Por favor, insira os dados corretamente.
-        </p>
-        <div class="actions">
-          <!-- <base-button simplebutton>Send Message</base-button> -->
-          <base-button mode="normalbtn" class="normalbtn">Cadastrar</base-button>
+          <base-button mode="normalbtn" class="normalbtn">Atualizar</base-button>
+          <base-button nome="normalbtn" class="normalbtn" @click="editCancel">Cancelar</base-button>
         </div>
       </form>
     </transition>
-    <!-- END SCHOOL FORM -->
   </base-card>
 </template>
 
 <script>
 export default {
+  props: ["editName", "editEmail", "editSchool", "editId"],
+  created() {
+    this.email = this.editEmail;
+    this.fullName = this.editName;
+    this.school = this.editSchool;
+    this.inscritoId = this.editId;
+  },
   data() {
     return {
       formType: "individual",
@@ -105,17 +75,11 @@ export default {
       fullName: "",
       school: "",
       otherSchool: "",
+      date: "",
+      inscritoId: "",
       emailIsValid: true,
       fullNameIsValid: true,
       //End individual data
-
-      //Start school date
-      schoolFullName: "",
-      numberStudents: null,
-      numberTeachers: null,
-      schoolEmail: "",
-      schoolFullNameIsValid: true,
-      //End school data
 
       signDate: "",
       formIsValid: true,
@@ -142,8 +106,15 @@ export default {
     }
   },
   methods: {
+    editCancel() {
+    this.email = "";
+    this.fullName = "";
+    this.school = "";
+    this.inscritoId = "";
+    this.$emit("closeEdit");
+    },
     resetForm() {
-      this.$router.push("/");
+      this.$router.push("/controlpanel");
     },
     validateSchoolFullName() {
       this.schoolFullNameIsValid = true;
@@ -157,7 +128,7 @@ export default {
     validateFullName() {
       this.fullNameIsValid = true;
     },
-    createInscrito() {
+    editInscrito() {
       //setting load page
       this.isLoading = true;
 
@@ -215,72 +186,17 @@ export default {
       setTimeout(() => {
         this.resetForm();
       }, 3000);
-    },
-    createSchoolInscrito() {
-      //setting load page
-      this.isLoading = true;
-
-      //validate form to avoid bugs
-      this.formIsValid = true;
-
-      //validating form
-      if (this.schoolFullName === "" || this.numberStudents === null || this.numberTeachers === null || this.schoolMail === "") {
-        this.formIsValid = false;
-        this.isLoading = false;
-        return;
-      }
-
-      //check if the email is already subscribed
-      let emails = this.allEmailInscritos;
-      let schoolEmail = this.allSchoolEmail;
-      if (emails.includes(this.schoolEmail) || schoolEmail.includes(this.schoolEmail)) {
-        this.emailIsValid = false;
-        this.isLoading = false;
-        return
-      }
-
-      //check if the school is already subscribed
-      let schoolName = this.allSchoolName;
-      if (schoolName.includes(this.schoolFullName)) {
-        this.schoolFullNameIsValid = false;
-        this.isLoading = false;
-        return
-      }
-
-      //creating and assigning date
-      let currentDate = new Date();
-      let month = currentDate.getMonth() + 1;
-      this.signDate =
-        currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
-
-      //inserting the school input
-      if (this.school === "outro") {
-        this.school = this.otherSchool;
-      }
-
-      const newSchool = {
-        schoolFullName: this.schoolFullName,
-        numberStudents: this.numberStudents,
-        numberTeachers: this.numberTeachers,
-        schoolEmail: this.schoolEmail,
-        date: this.signDate
-      };
-
-      this.$store.dispatch("signup/signupSchool", newSchool);
-      this.$emit("messageSent");
-
-      this.isLoading = false;  
-
-      this.msgSent = true;
-      setTimeout(() => {
-        this.resetForm();
-      }, 3000);
     }
   },
 };
 </script>
 
 <style scoped>
+.actions {
+  display: flex;
+  justify-content: space-around;
+}
+
 .formbtn {
   display: flex;
   width: 100%;

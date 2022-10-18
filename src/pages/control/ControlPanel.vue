@@ -1,7 +1,13 @@
 <template>
   <div>
-    {{editStudent}}
-    <base-card>
+    <update-form
+    v-if="isUpdateFormVisible"
+    :editName="editStudent.name"
+    :editEmail="editStudent.email"
+    :editSchool="editStudent.school"
+    :editId="editStudent.studentId"
+    @closeEdit="closeEditForm"></update-form>
+    <base-card v-if="!isUpdateFormVisible">
       <h1>Lista de pessoas inscritas individualmente</h1>
       <div class="form-control">
       <label for="searchstudent">Procurar por aluno</label>
@@ -23,13 +29,13 @@
             <td>{{ inscrito.school }}</td>
             <td>{{ inscrito.email }}</td>
             <td>{{ inscrito.date }}</td>
-            <td><button class="editaritem" @click="editItemStudent(inscrito.fullName, inscrito.school, inscrito.email, inscrito.date)">Editar</button></td>
+            <td><button class="editaritem" @click="editItemStudent(inscrito.fullName, inscrito.school, inscrito.email, inscrito.id)">Editar</button></td>
           </tr>
         </tbody>
       </table>
     </base-card>
 
-    <base-card>
+    <base-card v-if="!isUpdateFormVisible">
       <h1>Lista de escolas inscritas</h1>
       <table class="table">
         <thead>
@@ -58,15 +64,20 @@
 </template>
 
 <script>
+import UpdateForm from "../../components/messages/UpdateForm.vue";
 export default {
+  components: {
+    UpdateForm
+  },
   data() {
     return {
       searchedstudent: "",
+      isUpdateFormVisible: false,
       editStudent: {
-        nome: "",
-        escola: "",
+        name: "",
+        school: "",
         email: "",
-        data: ""
+        studentId: ""
       }
     }
   },
@@ -74,11 +85,19 @@ export default {
     this.fetchInscritos();
   },
   methods: {
-    editItemStudent(nome, escola, email, data) {
-      this.editStudent.nome = nome;
-      this.editStudent.escola = escola;
+    closeEditForm() {
+      this.isUpdateFormVisible = false;
+      this.editStudent.name = "";
+      this.editStudent.school = "";
+      this.editStudent.email = "";
+      this.editStudent.studentId = "";
+    },
+    editItemStudent(nome, escola, email, id) {
+      this.editStudent.name = nome;
+      this.editStudent.school = escola;
       this.editStudent.email = email;
-      this.editStudent.data = data;
+      this.editStudent.studentId = id;
+      this.isUpdateFormVisible = true;
     },
     async fetchInscritos() {
       //setting page to loading
