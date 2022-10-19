@@ -122,7 +122,9 @@ export default {
       let searched = this.searchedstudent;
       const list = this.inscritosList;
 
-      return list.filter(student => student.fullName.toLowerCase().includes(searched.toLowerCase()));
+      return list.filter(student =>  student.school.toLowerCase().includes(searched.toLowerCase()) || student.fullName.toLowerCase().includes(searched.toLowerCase()) );
+                                     
+                                       
 
     },
     schoolList() {
