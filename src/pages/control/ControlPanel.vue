@@ -1,18 +1,24 @@
 <template>
   <div>
     <update-form
-    v-if="isUpdateFormVisible"
-    :editName="editStudent.name"
-    :editEmail="editStudent.email"
-    :editSchool="editStudent.school"
-    :editId="editStudent.studentId"
-    @closeEdit="closeEditForm"
-    @editSent="closeEditForm"></update-form>
+      v-if="isUpdateFormVisible"
+      :editName="editStudent.name"
+      :editEmail="editStudent.email"
+      :editSchool="editStudent.school"
+      :editId="editStudent.studentId"
+      @closeEdit="closeEditForm"
+      @editSent="closeEditForm"
+    ></update-form>
     <base-card v-if="!isUpdateFormVisible">
       <h1>Lista de pessoas inscritas individualmente</h1>
+      <h3>Número de inscritos/Total de inscritos: {{inscritosNumbers}}</h3>
       <div class="form-control">
-      <label for="searchstudent">Procurar por aluno</label>
-      <input id="searchstudent" placeholder="Procure aqui..." v-model.trim="searchedstudent" />
+        <label for="searchstudent">Procurar por aluno</label>
+        <input
+          id="searchstudent"
+          placeholder="Procure aqui..."
+          v-model.trim="searchedstudent"
+        />
       </div>
       <table class="table">
         <thead>
@@ -30,7 +36,21 @@
             <td>{{ inscrito.school }}</td>
             <td>{{ inscrito.email }}</td>
             <td>{{ inscrito.date }}</td>
-            <td><button class="editaritem" @click="editItemStudent(inscrito.fullName, inscrito.school, inscrito.email, inscrito.id)">Editar</button></td>
+            <td>
+              <button
+                class="editaritem"
+                @click="
+                  editItemStudent(
+                    inscrito.fullName,
+                    inscrito.school,
+                    inscrito.email,
+                    inscrito.id
+                  )
+                "
+              >
+                Editar
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -56,7 +76,22 @@
             <td>{{ inscrito.numberTeachers }}</td>
             <td>{{ inscrito.schoolEmail }}</td>
             <td>{{ inscrito.date }}</td>
-            <td><button class="editaritem" @click="editItemSchool(inscrito.schoolFullName, inscrito.numberStudents, inscrito.numberTeachers, inscrito.schoolEmail, inscrito.date)">Editar</button></td>
+            <td>
+              <button
+                class="editaritem"
+                @click="
+                  editItemSchool(
+                    inscrito.schoolFullName,
+                    inscrito.numberStudents,
+                    inscrito.numberTeachers,
+                    inscrito.schoolEmail,
+                    inscrito.date
+                  )
+                "
+              >
+                Editar
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -68,7 +103,7 @@
 import UpdateForm from "../../components/messages/UpdateForm.vue";
 export default {
   components: {
-    UpdateForm
+    UpdateForm,
   },
   data() {
     return {
@@ -78,9 +113,9 @@ export default {
         name: "",
         school: "",
         email: "",
-        studentId: ""
-      }
-    }
+        studentId: "",
+      },
+    };
   },
   created() {
     this.fetchInscritos();
@@ -122,10 +157,14 @@ export default {
       let searched = this.searchedstudent;
       const list = this.inscritosList;
 
-      return list.filter(student =>  student.school.toLowerCase().includes(searched.toLowerCase()) || student.fullName.toLowerCase().includes(searched.toLowerCase()) );
-                                     
-                                       
-
+      return list.filter(
+        (student) =>
+          student.school.toLowerCase().includes(searched.toLowerCase()) ||
+          student.fullName.toLowerCase().includes(searched.toLowerCase())
+      );
+    },
+    inscritosNumbers() {
+      return this.filteredStudentsList.length + "/" + this.inscritosList.length;
     },
     schoolList() {
       return this.$store.getters["signup/getSchoolList"];
