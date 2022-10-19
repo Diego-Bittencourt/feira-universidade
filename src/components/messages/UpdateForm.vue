@@ -143,21 +143,21 @@ export default {
       }
 
       //check if the email is already subscribed
-      let emails = this.allEmailInscritos;
-      let schoolEmail = this.allSchoolEmail;
-      if (emails.includes(this.email) || schoolEmail.includes(this.email)) {
-        this.emailIsValid = false;
-        this.isLoading = false;
-        return
-      }
+      // let emails = this.allEmailInscritos;
+      // let schoolEmail = this.allSchoolEmail;
+      // if (emails.includes(this.email) || schoolEmail.includes(this.email)) {
+      //   this.emailIsValid = false;
+      //   this.isLoading = false;
+      //   return
+      // }
 
       //check if the user is already subscribed
-      let names = this.allNomeInscritos;
-      if (names.includes(this.fullName)) {
-        this.fullNameIsValid = false;
-        this.isLoading = false;
-        return
-      }
+      // let names = this.allNomeInscritos;
+      // if (names.includes(this.fullName)) {
+      //   this.fullNameIsValid = false;
+      //   this.isLoading = false;
+      //   return
+      // }
 
       //creating and assigning date
       let currentDate = new Date();
@@ -170,21 +170,23 @@ export default {
         this.school = this.otherSchool;
       }
 
-      const newsignup = {
-        date: this.signDate,
+      const editsignup = {
+        editDate: this.signDate,
         fullName: this.fullName,
         email: this.email,
         school: this.school,
+        studentId: this.inscritoId
       };
 
-      this.$store.dispatch("signup/signupStudent", newsignup);
-      this.$emit("messageSent");
+      this.$store.dispatch("signup/editStudent", editsignup);
+      
 
       this.isLoading = false;  
 
       this.msgSent = true;
       setTimeout(() => {
         this.resetForm();
+        this.$emit("editSent");
       }, 3000);
     }
   },

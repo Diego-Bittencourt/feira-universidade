@@ -145,5 +145,31 @@ export default {
         context.commit('setSchoolList', schoolList);
         context.commit('setSchoolName', schoolName);
         context.commit('setSchoolEmail', schoolEmail);
+    },
+    async editStudent(context, payload) {
+         
+        // creating the object
+        const editId = payload.studentId;
+        const newsignup = {
+            editDate: payload.editDate,
+            email: payload.email,
+            fullName: payload.fullName,
+            school: payload.school
+        };
+        
+        //create the post
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/inscritos/${editId}.json`,
+            {
+                method: "PATCH",
+                body: JSON.stringify(newsignup)
+            }
+        );
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+            const error = new Error(responseData.message || 'Failed to send request');
+              throw error;
+        }
     }    
 }

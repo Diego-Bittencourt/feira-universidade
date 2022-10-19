@@ -6,7 +6,8 @@
     :editEmail="editStudent.email"
     :editSchool="editStudent.school"
     :editId="editStudent.studentId"
-    @closeEdit="closeEditForm"></update-form>
+    @closeEdit="closeEditForm"
+    @editSent="closeEditForm"></update-form>
     <base-card v-if="!isUpdateFormVisible">
       <h1>Lista de pessoas inscritas individualmente</h1>
       <div class="form-control">
@@ -91,6 +92,8 @@ export default {
       this.editStudent.school = "";
       this.editStudent.email = "";
       this.editStudent.studentId = "";
+      this.searchedstudent = "";
+      this.fetchInscritos();
     },
     editItemStudent(nome, escola, email, id) {
       this.editStudent.name = nome;
