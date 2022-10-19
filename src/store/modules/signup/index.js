@@ -12,7 +12,8 @@ export default {
             schoolList: [],
             schoolName: [],
             schoolEmail: [],
-            checkins: []
+            checkins: [],
+            checkinsList: []
         }
     },
     mutations: signupMutations,

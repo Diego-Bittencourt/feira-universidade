@@ -22,5 +22,8 @@ export default {
     },
     setAllCheckins(state, payload) {
         state.checkins = payload;
+    },
+    setTheCheckinList(state, payload) {
+        state.checkinsList = payload;
     }
 }

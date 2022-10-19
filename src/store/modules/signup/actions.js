@@ -225,13 +225,16 @@ export default {
   
         //create an empty array
         const users = [];
+        const inscritosList = [];
   
         //pushing the users into the array
         for (const name in responseData) {
           users.push(responseData[name].fullName);
+          inscritosList.push({fullName: responseData[name].fullName, school: responseData[name].school})
         }
   
         context.commit("setAllCheckins", users);
+        context.commit("setTheCheckinList", inscritosList);
   
       },    
 }

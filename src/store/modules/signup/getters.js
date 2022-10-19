@@ -19,5 +19,8 @@ export default {
     },
     getCheckins(state) {
         return state.checkins;
+    },
+    getCheckinsList(state) {
+        return state.checkinsList;
     }
 }
