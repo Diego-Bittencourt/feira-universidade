@@ -218,6 +218,11 @@ h1 {
   margin-bottom: 2rem;
 }
 
+h3 {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
 .table {
   width: 100%;
   max-width: 100%;

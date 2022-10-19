@@ -9,7 +9,8 @@ import RegisterUser from './pages/RegisterUser.vue';
 import ControlPanel from './pages/control/ControlPanel.vue';
 
 
-// import store from './store/index.js';
+//import the store to use on the navigation guards
+import store from './store/index.js';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -32,7 +33,8 @@ const router = createRouter({
         },
         {
             path: '/controlpanel',
-            component: ControlPanel
+            component: ControlPanel,
+            meta: { requiresAuth: true }
         },
         {
             path: '/:notFound(.*)',
@@ -41,5 +43,17 @@ const router = createRouter({
     ]
 });
 
+
+
+//add navigation guards
+
+router.beforeEach(function(to, from, next) {
+    if(to.meta.requiresAuth && !store.getters.isLoggedIn) {
+        next('auth');
+    } else {
+        next();
+    }
+
+})
 
 export default router;
