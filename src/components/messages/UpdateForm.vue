@@ -51,7 +51,15 @@
         <div class="actions">
           <!-- <base-button simplebutton>Send Message</base-button> -->
           <base-button mode="normalbtn" class="normalbtn">Atualizar</base-button>
+          <base-button mode="normalbtn" class="normalbtn caution" @click.prevent="openConfirmDelete">DELETAR</base-button>
           <base-button nome="normalbtn" class="normalbtn" @click="editCancel">Cancelar</base-button>
+        </div>
+        <div v-if="confirmDelete">
+          <h1>Tem certeza que deseja deletar o inscrito {{fullName}} da escola {{school}}?</h1>
+          <div class="actions">
+            <base-button mode="normalbtn" class="normalbtn caution" @click.prevent="deleteInscrito">Confirmar</base-button>  
+            <base-button mode="normalbtn" class="normalbtn" @click="cancelDelete">Cancelar</base-button>
+          </div>
         </div>
       </form>
     </transition>
@@ -85,7 +93,7 @@ export default {
       formIsValid: true,
       isLoading: false,
       msgSent: false,
-      
+      confirmDelete: false
     };
   },
   computed: {
@@ -106,6 +114,22 @@ export default {
     }
   },
   methods: {
+     openConfirmDelete() {
+      this.confirmDelete = true;
+    },
+    cancelDelete() {
+      this.confirmDelete = false;
+    },
+    deleteInscrito() {
+      const inscritoId = this.inscritoId;
+      this.$store.dispatch("signup/deleteInscrito", inscritoId);
+
+      this.msgSent = true;
+      setTimeout(() => {
+        this.resetForm();
+        this.$emit("editSent");
+      }, 3000);
+    },
     editCancel() {
     this.email = "";
     this.fullName = "";
@@ -142,23 +166,6 @@ export default {
         return;
       }
 
-      //check if the email is already subscribed
-      // let emails = this.allEmailInscritos;
-      // let schoolEmail = this.allSchoolEmail;
-      // if (emails.includes(this.email) || schoolEmail.includes(this.email)) {
-      //   this.emailIsValid = false;
-      //   this.isLoading = false;
-      //   return
-      // }
-
-      //check if the user is already subscribed
-      // let names = this.allNomeInscritos;
-      // if (names.includes(this.fullName)) {
-      //   this.fullNameIsValid = false;
-      //   this.isLoading = false;
-      //   return
-      // }
-
       //creating and assigning date
       let currentDate = new Date();
       let month = currentDate.getMonth() + 1;
@@ -194,9 +201,14 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  margin-top: 2rem;
+}
+
 .actions {
   display: flex;
   justify-content: space-around;
+  margin-top: 2rem;
 }
 
 .formbtn {

@@ -171,5 +171,22 @@ export default {
             const error = new Error(responseData.message || 'Failed to send request');
               throw error;
         }
+    },
+    async deleteInscrito(context, payload) {
+        const inscritoId = payload;
+
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/inscritos/${inscritoId}.json`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+            const error = new Error(responseData.message || 'Failed to send request');
+              throw error;
+        }
+
     }    
 }

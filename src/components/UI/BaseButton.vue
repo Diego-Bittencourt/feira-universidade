@@ -74,6 +74,11 @@ a:hover {
   transform: scale(0.85);
 }
 
+.caution {
+  background-color: rgb(194, 7, 7);
+  color: rgb(195, 195, 195);
+}
+
 @media screen and (max-width: 740px) {
   a,
   button {
