@@ -1,5 +1,6 @@
 <template>
   <div>
+    <base-card><base-button to="/coordenacaoevento" link class="normalbtn">Clique aqui para acessar o control de entrada do evento</base-button></base-card>
     <update-form
       v-if="isUpdateFormVisible"
       :editName="editStudent.name"

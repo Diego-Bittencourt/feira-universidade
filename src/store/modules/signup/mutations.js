@@ -19,5 +19,8 @@ export default {
     },
     setSchoolEmail(state, payload) {
         state.schoolEmail = payload;
+    },
+    setAllCheckins(state, payload) {
+        state.checkins = payload;
     }
 }

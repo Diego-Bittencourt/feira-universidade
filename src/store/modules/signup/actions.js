@@ -188,5 +188,50 @@ export default {
               throw error;
         }
 
-    }    
+    },
+    async checkinInscrito(context, payload) {
+        //creating the object
+        const checkin = payload;
+    
+        //create the post
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/checkin.json`,
+            {
+                method: "POST",
+                body: JSON.stringify(checkin)
+            }
+        );
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+            const error = new Error(responseData.message || 'Failed to send request');
+              throw error;
+        }
+    },
+    async fetchAllCheckins(context) {
+        
+  
+        //fetch all checkins from database
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/checkin.json`);
+  
+        //receive the data from database
+        const responseData = await response.json();
+  
+        //checking for errors
+        if(!response.ok) {
+          const error = new Error(responseData.message || "Something went wrong.");
+          throw error;
+        }
+  
+        //create an empty array
+        const users = [];
+  
+        //pushing the users into the array
+        for (const name in responseData) {
+          users.push(responseData[name].fullName);
+        }
+  
+        context.commit("setAllCheckins", users);
+  
+      },    
 }

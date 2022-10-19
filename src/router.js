@@ -7,6 +7,10 @@ import MessagePage from './pages/messages/MessagePage.vue';
 import NotFound from './pages/NotFound.vue';
 import RegisterUser from './pages/RegisterUser.vue';
 import ControlPanel from './pages/control/ControlPanel.vue';
+import EventoControle from './pages/evento/EventoControle.vue';
+import EventoDados from './components/registro/EventoDados.vue';
+import ControleEntrada from './components/registro/ControleEntrada.vue';
+import InscritosPresentes from './components/registro/InscritosPresentes.vue';
 
 
 //import the store to use on the navigation guards
@@ -30,6 +34,16 @@ const router = createRouter({
         {
             path: '/form',
             component: MessagePage
+        },
+        {
+            path: '/coordenacaoevento',
+            component: EventoControle,
+            meta: {requiresAuth: true },
+            children: [
+                { path: 'dados', component: EventoDados },
+                { path: 'entrada', component: ControleEntrada},
+                { path: 'presentes', component: InscritosPresentes}
+            ]
         },
         {
             path: '/controlpanel',

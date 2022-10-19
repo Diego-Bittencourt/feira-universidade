@@ -30,6 +30,9 @@ export default {
 </script>
 
 <style scoped>
+.router-link-exact-active {
+  box-shadow: 0px 0px 8px 2px darkblue;
+}
 
 a,
 button {

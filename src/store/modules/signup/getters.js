@@ -16,5 +16,8 @@ export default {
     },
     getSchoolName(state) {
         return state.schoolName;
+    },
+    getCheckins(state) {
+        return state.checkins;
     }
 }
