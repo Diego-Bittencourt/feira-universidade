@@ -1,6 +1,6 @@
 <template>
-<div>
-  <message-form @messageSent="loadMessages"></message-form>
+  <div>
+    <message-form></message-form>
   </div>
 </template>
 
@@ -15,29 +15,10 @@ export default {
       isLoading: true,
     };
   },
-  created() {
-    this.fetchInscritos();
-  },
   computed: {
-    getInscritos() {
-      return this.$store.getters["signup/getInscritos"];
-    }
+   
   },
   methods: {
-    async fetchInscritos() {
-      //setting page to loading
-      this.isLoading = true;
-
-      try {
-        //fetching messages from firebase
-        await this.$store.dispatch("signup/fetchInscritos");
-        await this.$store.dispatch("signup/fetchEscolas");
-      } catch (error) {
-        this.error = error.message || "Something went wrong";
-      } // end of the catch
-
-       this.isLoading = false;
-    },
   }
 };
 </script>

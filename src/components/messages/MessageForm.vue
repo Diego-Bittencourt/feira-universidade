@@ -1,100 +1,439 @@
 <template>
+  <the-header></the-header>
   <base-card v-if="msgSent && !isLoading">
     <div class="msgwrapper">
       <h2>Inscrição efetuada com sucesso.</h2>
-      <hr/>
+      <hr class="progressBar" />
     </div>
   </base-card>
   <base-card v-if="!msgSent && !isLoading">
-  <div class="formbtn">
-    <base-button @click="toggleForm(true)">Individual</base-button>
-    <base-button @click="toggleForm(false)">Escola</base-button>
-  </div>
-  <!-- FORM FOR INDIVIDUAL -->
+    <!-- FORM FOR INDIVIDUAL -->
     <transition name="msgform" mode="out-in">
-      <form @submit.prevent="createInscrito" v-if="formType">
+      <form @submit.prevent="createInscrito">
         <div class="form-control">
-          <h1>Inscrição individual</h1>
-          </div>
-        <div class="form-control">
-          <label for="fullName">Nome Completo:</label>
-          <input type="fullName" v-model.trim="fullName" @input="validateFullName"/>
-          <p v-if="!fullNameIsValid" class="errors">Este nome já foi cadastrado.</p>
+          <h1>Dados da pré-matrícula</h1>
         </div>
+
+        <!-- Which school will enroll-->
         <div class="form-control">
-          <label for="receiver">Qual escola você frequenta?</label>
-          <select name="receiver" id="receiver" v-model="school">
+          <label>Em qual unidade da EAS irá realizar a matrícula?</label>
+          <div>
+            <button
+              class="school-choose"
+              :class="enrollSchool === 'toyota' ? 'chosenbtn' : 'normalbtn'"
+              type="button"
+              @click="setEnrollSchool('toyota')"
+            >
+              EAS Toyota
+            </button>
+            <button
+              class="school-choose"
+              :class="enrollSchool === 'toyohashi' ? 'chosenbtn' : 'normalbtn'"
+              type="button"
+              @click="setEnrollSchool('toyohashi')"
+            >
+              EAS Toyohashi
+            </button>
+            <button
+              class="school-choose"
+              :class="enrollSchool === 'hamamatsu' ? 'chosenbtn' : 'normalbtn'"
+              type="button"
+              @click="setEnrollSchool('hamamatsu')"
+            >
+              EAS Hamamatsu
+            </button>
+            <button
+              class="school-choose"
+              :class="enrollSchool === 'hekinan' ? 'chosenbtn' : 'normalbtn'"
+              type="button"
+              @click="setEnrollSchool('hekinan')"
+            >
+              EAS Hekinan
+            </button>
+            <button
+              class="school-choose"
+              :class="enrollSchool === 'suzuka' ? 'chosenbtn' : 'normalbtn'"
+              type="button"
+              @click="setEnrollSchool('suzuka')"
+            >
+              EAS Suzuka
+            </button>
+            <button
+              class="school-choose"
+              :class="enrollSchool === 'ota' ? 'chosenbtn' : 'normalbtn'"
+              type="button"
+              @click="setEnrollSchool('ota')"
+            >
+              EAS Ota
+            </button>
+          </div>
+        </div>
+
+        <!-- Enroll date-->
+        <div class="form-control">
+          <label for="enrollDate">* Data prevista da Matrícula</label>
+          <input
+            type="text"
+            id="enrollDate"
+            placeholder="dd/mm/aaaa"
+            v-model.trim="enrollDate"
+          />
+        </div>
+
+        <!-- Start date-->
+        <div class="form-control">
+          <label for="startDate"
+            >* Data prevista do início na participação às aulas</label
+          >
+          <input
+            type="text"
+            id="startDate"
+            placeholder="dd/mm/aaaa"
+            v-model.trim="startDate"
+          />
+        </div>
+
+        <hr />
+        <p class="titulo">Informações Pessoais</p>
+        <!-- Student name-->
+        <div class="form-control">
+          <label for="studentName">*Nome do(a) aluno(a):</label>
+          <input id="studentName" type="text" v-model.trim="studentName" />
+        </div>
+
+        <!-- Student Age-->
+        <div class="form-control">
+          <label for="studentAge">*Idade do(a) aluno(a):</label>
+          <input id="studentAge" type="number" v-model.trim="studentAge" />
+        </div>
+
+        <!-- Student Brith day-->
+        <div class="form-control">
+          <label for="studentBirth">*Data de nascimento:</label>
+          <input
+            id="studentBirth"
+            type="text"
+            placeholder="dd/mm/aaaa"
+            v-model.trim="studentBirth"
+          />
+        </div>
+
+        <!-- Student Birth Place-->
+        <div class="form-control">
+          <label for="studentBirthPlace">*Local de Nascimento</label>
+          <input
+            id="studentBirthPlace"
+            type="text"
+            placeholder="cidade, estado, país..."
+            v-model.trim="studentBirthPlace"
+          />
+        </div>
+
+        <!-- Student Citizenship-->
+        <div class="form-control">
+          <label for="studentCitizenship">*Nacionalidade</label>
+          <input
+            id="studentCitizenship"
+            type="text"
+            placeholder="brasileiro, japonês, filipino, chileno..."
+            v-model.trim="studentCitizenship"
+          />
+        </div>
+
+        <!-- Student Passport number-->
+        <div class="form-control">
+          <label for="studentPassportNumber">Número do passaporte</label>
+          <input
+            id="studentPassportNumber"
+            type="text"
+            v-model.trim="studentPassportNumber"
+          />
+        </div>
+
+        <!-- Student Passport Expiracy Date-->
+        <div class="form-control">
+          <label for="studentPassportExpiracy"
+            >Data de validade do passaporte</label
+          >
+          <input
+            id="studentPassportExpiracy"
+            type="text"
+            placeholder="dd/mm/aaaa"
+            v-model.trim="studentPassportExpiracy"
+          />
+        </div>
+
+        <!-- Student Passport Type-->
+        <div class="form-control">
+          <label for="studentPassportType">Tipo do passaporte</label>
+          <input
+            id="studentPassportType"
+            type="text"
+            placeholder="permanente, filho de permanente, longa estadia..."
+            v-model.trim="studentPassportType"
+          />
+        </div>
+
+        <!--Father Name-->
+        <div class="form-control">
+          <label for="fatherName">*Nome do pai</label>
+          <input id="fatherName" type="text" v-model.trim="fatherName" />
+        </div>
+
+        <!-- Mother Name-->
+        <div class="form-control">
+          <label for="motherName">*Nome da mãe</label>
+          <input id="motherName" type="text" v-model.trim="motherName" />
+        </div>
+
+        <!-- Chronicle disease-->
+        <div class="form-control">
+          <label for="studentChronical">Portador de alguma enfermidade?</label>
+          <input
+            id="studentChronical"
+            type="text"
+            placeholder="diabetes, hipertensão, asma, cardíacos, epilepsia..."
+            v-model.trim="studentChronical"
+          />
+        </div>
+
+        <!-- Student Medicina-->
+        <div class="form-control">
+          <label for="studentMedicine">Usuário de algum medicamento</label>
+          <input
+            id="studentMedicine"
+            type="text"
+            placeholder=""
+            v-model.trim="studentMedicine"
+          />
+        </div>
+
+        <hr />
+        <p class="titulo">Contato</p>
+        <span>*Por favor, preencher pelo menos um telefone de contato</span>:
+
+        <!-- Father phone-->
+        <div class="form-control">
+          <label for="fatherPhone">Telefone do pai</label>
+          <input id="fatherPhone" type="text" v-model.trim="fatherPhone" />
+        </div>
+
+        <!-- Mother Phone-->
+        <div class="form-control">
+          <label for="motherPhone">Telefone da mãe</label>
+          <input id="motherPhone" type="text" v-model.trim="motherPhone" />
+        </div>
+
+        <!-- House Phone-->
+        <div class="form-control">
+          <label for="housePhone">Telefone residencial</label>
+          <input id="housePhone" type="text" v-model.trim="housePhone" />
+        </div>
+
+        <!-- Company Phone-->
+        <div class="form-control">
+          <label for="companyPhone">Telefone da firma responsável</label>
+          <input id="companyPhone" type="text" v-model.trim="companyPhone" />
+        </div>
+
+        <!-- Emergency Phone-->
+        <div class="form-control">
+          <label for="emergencyPhone">Telefone de emergência</label>
+          <input
+            id="emergencyPhone"
+            type="text"
+            placeholder="Insira aqui o número de contato que não seja dos pais ou responsáveis."
+            v-model.trim="emergencyPhone"
+          />
+        </div>
+
+        <hr />
+        <p class="titulo">Endereço</p>
+        <!-- Address Number-->
+        <div class="form-control">
+          <label for="addressNumber">*CEP 〒</label>
+          <input id="addressNumber" type="text" v-model.trim="addressNumber" />
+        </div>
+
+        <!-- Address Text-->
+        <div class="form-control">
+          <label for="addressText">*Endereço</label>
+          <input
+            id="addressText"
+            type="text"
+            placeholder="prédio, bairro, cidade, província"
+            v-model.trim="addressText"
+          />
+        </div>
+
+        <!-- Sponsor Name-->
+        <div class="form-control">
+          <label for="sponsorName">*Nome do responsável financeiro</label>
+          <input id="sponsorName" type="text" v-model.trim="sponsorName" />
+        </div>
+
+        <!-- Studied in EAS-->
+        <div class="form-control">
+          <label for="previousEAS">*Já estudou em alguma unidade EAS?</label>
+          <select id="previousEAS" name="receiver" v-model="previousEAS">
             <option disabled value="">Escolha uma opção...</option>
             <option value="toyota">EAS Toyota</option>
             <option value="hekinan">EAS Hekinan</option>
             <option value="suzuka">EAS Suzuka</option>
             <option value="hamamatsu">EAS Hamamatsu</option>
             <option value="toyohashi">EAS Toyohashi</option>
-            <option value="none">Não sou mais estudante</option>
-            <option value="outro">Outro</option>
+            <option value="ota">EAS Ota</option>
+            <option value="não">Nunca estudou na EAS</option>
           </select>
         </div>
-        <div class="form-control" v-if="school === 'outro'">
-          <label for="anotherschool">Escreva aqui a escola onde você estuda.</label>
-        <input type="text" id="anotherschool"  v-model.trim="otherSchool"/>
-        </div>
+
+        <!-- Japanese School and Grade-->
         <div class="form-control">
-          <label for="email">Email para contato</label>
-          <input
-            type="email"
-            placeholder="algo@algumlugar.server"
-            v-model.trim="email"
-            @input="validateEmail"
-          />
-           <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
+          <label for="japaneseGrade">Série que parou no Japão e Escola</label>
+          <input id="japaneseGrade" type="text" v-model.trim="japanGrade" />
         </div>
+
+        <!-- Brazil School and Grade-->
+        <div class="form-control">
+          <label for="brazilGrade">Série que parou no Brasil e Escola</label>
+          <input id="brazilGrade" type="text" v-model.trim="brazilGrade" />
+        </div>
+
+        <!-- Period of stay in Japan-->
+        <div class="form-control">
+          <label for="stayJapan">Tempo de estadia no Japão</label>
+          <input id="stayJapan" type="text" v-model.trim="stayJapan" />
+        </div>
+
+        <!-- Recommended Name-->
+        <div class="form-control">
+          <label for="recommendedName"
+            >Nome da pessoa que recomendou a EAS</label
+          >
+          <input
+            id="recommendedName"
+            type="text"
+            v-model.trim="recommendedName"
+          />
+        </div>
+
+        <!-- Speak Portuguese-->
+        <div class="form-control">
+          <label for="speakPortuguese">Entende e fala português</label>
+          <input
+            id="speakPortuguese"
+            type="text"
+            v-model.trim="speakPortuguese"
+          />
+        </div>
+
+        <!-- School Bus-->
+        <div class="form-control">
+          <label for="sponsorName">Irá utilizar o transporte da escola</label>
+          <div class="schoolbtn">
+            <label
+              >Sim<input
+                type="radio"
+                name="schoolBus"
+                value="sim"
+                v-model="schoolBus"
+            /></label>
+            <label
+              >Não<input
+                type="radio"
+                name="schoolBus"
+                value="não"
+                v-model="schoolBus"
+            /></label>
+          </div>
+        </div>
+
+        <hr />
+        <p class="titulo">Informações médicas</p>
+        <!-- Medical information-->
+        <div class="form-control">
+          <label for="healthInsurance">Possui seguro de saúde? Qual?</label>
+          <input
+            id="healthInsurance"
+            type="text"
+            placeholder="shakai hoken, kokumin hoken, não possui..."
+            v-model.trim="healthInsurance"
+          />
+        </div>
+
+        <!-- Medical Treatment-->
+        <div class="form-control">
+          <label for="medicalTreatment"
+            >Realiza algum tratamento atualmente?</label
+          >
+          <input
+            type="text"
+            id="medicalTreatment"
+            placeholder="psicólogo, psiquiatra, cardíaco..."
+            v-model.trim="medicalTreatment"
+          />
+        </div>
+
+        <!-- Medical Allergy-->
+        <div class="form-control">
+          <label for="medicalAllergy"
+            >Possui algum tipo de alergia? Qual?</label
+          >
+          <input
+            type="text"
+            id="medicalAllergy"
+            placeholder="comida, corante, remédio, tecidos..."
+            v-model.trim="medicalAllergy"
+          />
+        </div>
+
+        <!-- Medical Surgery-->
+        <div class="form-control">
+          <label for="medicalSurgery"
+            >Já fez alguma cirurgia? Qual? Há quanto tempo?</label
+          >
+          <input
+            type="text"
+            id="medicalSurgery"
+            placeholder="apendicite, cardíaca, respiratória..."
+            v-model.trim="medicalSurgery"
+          />
+        </div>
+
+        <!-- Medical Allergy-->
+        <div class="form-control">
+          <label for="medicalDisability"
+            >Possui alguma necessidade específica? Qual? Tem laudo
+            médico?</label
+          >
+          <input
+            type="text"
+            id="medicalDisability"
+            placeholder="autismo, déficit de atenção..."
+            v-model.trim="medicalDisability"
+          />
+        </div>
+
+        <!-- can't participate in Physical Education - PE-->
+        <div class="form-control">
+          <label for="noPe"
+            >Possui alguma restrição à atividade física? Qual?</label
+          >
+          <input type="text" id="noPe" v-model.trim="noPe" />
+        </div>
+
+        <!--END OF INPUT / FORM VALIDATION-->
         <p class="errors" v-if="!formIsValid">
           Por favor, insira os dados corretamente.
         </p>
         <div class="actions">
-          <!-- <base-button simplebutton>Send Message</base-button> -->
-          <base-button mode="normalbtn" class="normalbtn">Cadastrar</base-button>
+          <base-button mode="normalbtn" class="normalbtn"
+            >Cadastrar</base-button
+          >
         </div>
       </form>
-    <!-- END FORM FOR INDIVIDUAL -->
-    <!-- START SCHOOL FORM -->
-      <form @submit.prevent="createSchoolInscrito" v-else>
-        <div class="form-control">
-          <h1>Inscrição por escola</h1>
-        </div>
-        <div class="form-control">
-          <label for="fullName">Nome da escola:</label>
-          <input type="fullName" v-model.trim="schoolFullName" @input="validateSchoolFullName"/>
-          <p v-if="!schoolFullNameIsValid" class="errors">Esta escola já foi cadastrada.</p>
-        </div>
-        <div class="form-control">
-          <label for="numberStudents">Quantos alunos participarão?</label>
-          <input type="number" v-model.trim="numberStudents">
-        </div>
-        <div class="form-control">
-          <label for="numberTeachers">Quantos professores ou funcionários irão acompanhar os alunos?</label>
-          <input type="number" v-model.trim="numberTeachers">
-        </div>
-        <div class="form-control">
-          <label for="email">Email para contato</label>
-          <input
-            type="email"
-            placeholder="email@servidor.com"
-            v-model.trim="schoolEmail"
-            @input="validateEmail"
-          />
-           <p v-if="!emailIsValid" class="errors">Este email já foi cadastrado.</p>
-        </div>
-        <p class="errors" v-if="!formIsValid">
-          Por favor, insira os dados corretamente.
-        </p>
-        <div class="actions">
-          <!-- <base-button simplebutton>Send Message</base-button> -->
-          <base-button mode="normalbtn" class="normalbtn">Cadastrar</base-button>
-        </div>
-      </form>
+      <!-- END FORM FOR INDIVIDUAL -->
     </transition>
-    <!-- END SCHOOL FORM -->
   </base-card>
 </template>
 
@@ -102,64 +441,74 @@
 export default {
   data() {
     return {
-      formType: "individual",
       //Start individual data
-      email: "",
-      fullName: "",
-      school: "",
-      otherSchool: "",
-      emailIsValid: true,
-      fullNameIsValid: true,
+      enrollSchool: "",
+      studentName: "",
+      studentAge: 0,
+      studentBirth: "",
+      studentBirthPlace: "",
+      studentCitizenship: "",
+      studentPassportNumber: "",
+      studentPassportExpiracy: "",
+      studentPassportType: "",
+      fatherName: "",
+      motherName: "",
+      studentChronical: "",
+      studentMedicine: "",
+      fatherPhone: "",
+      motherPhone: "",
+      housePhone: "",
+      companyPhone: "",
+      emergencyPhone: "",
+      addressNumber: "",
+      addressText: "",
+      sponsorName: "",
+      previousEAS: "",
+      japanGrade: "",
+      brazilGrade: "",
+      stayJapan: "",
+      recommendedName: "",
+      speakPortuguese: "",
+      schoolBus: "",
+      healthInsurance: "",
+      medicalTreatment: "",
+      medicalAllergy: "",
+      medicalSurgery: "",
+      medicalDisability: "",
+      noPe: "",
+      enrollDate: "",
+      startDate: "",
       //End individual data
-
-      //Start school date
-      schoolFullName: "",
-      numberStudents: null,
-      numberTeachers: null,
-      schoolEmail: "",
-      schoolFullNameIsValid: true,
-      //End school data
 
       signDate: "",
       formIsValid: true,
       isLoading: false,
       msgSent: false,
-      
     };
   },
   computed: {
-    allEmailInscritos() {
-      return this.$store.getters["signup/getEmailInscritos"];
+    phoneAvailable() {
+      if (
+        this.fatherPhone !== "" ||
+        this.motherPhone !== "" ||
+        this.housePhone !== "" ||
+        this.emergencyPhone !== "" ||
+        this.companyPhone !== ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     },
-    allNomeInscritos() {
-      return this.$store.getters["signup/getNomeInscritos"];
-    },
-    allInscritos() {
-      return this.$store.getters["signup/getInscritos"];
-    },
-    allSchoolEmail() {
-      return this.$store.getters["signup/getSchoolEmail"];
-    },
-    allSchoolName() {
-      return this.$store.getters["signup/getSchoolName"];
-    }
   },
   methods: {
+    setEnrollSchool(school) {
+      this.enrollSchool = school;
+    },
     resetForm() {
       this.$router.push("/");
     },
-    validateSchoolFullName() {
-      this.schoolFullNameIsValid = true;
-    },
-    toggleForm(method) {
-      this.formType = method;
-    },
-    validateEmail() {
-      this.emailIsValid = true;
-    },
-    validateFullName() {
-      this.fullNameIsValid = true;
-    },
+
     createInscrito() {
       //setting load page
       this.isLoading = true;
@@ -168,27 +517,25 @@ export default {
       this.formIsValid = true;
 
       //validating form
-      if (this.fullName === "" || this.school === "" || this.email === "") {
+      if (
+        this.studentName === "" ||
+        this.studentAge === "" ||
+        this.studentBirth === "" ||
+        this.enrollDate === "" ||
+        this.startDate === "" ||
+        this.studentBirthPlace === "" ||
+        this.studentCitizenship === "" ||
+        this.fatherName === "" ||
+        this.motherName === "" ||
+        !this.phoneAvailable ||
+        this.addressNumber === "" ||
+        this.addressText === "" ||
+        this.sponsorName === "" ||
+        this.previousEAS === ""
+      ) {
         this.formIsValid = false;
         this.isLoading = false;
         return;
-      }
-
-      //check if the email is already subscribed
-      let emails = this.allEmailInscritos;
-      let schoolEmail = this.allSchoolEmail;
-      if (emails.includes(this.email) || schoolEmail.includes(this.email)) {
-        this.emailIsValid = false;
-        this.isLoading = false;
-        return
-      }
-
-      //check if the user is already subscribed
-      let names = this.allNomeInscritos;
-      if (names.includes(this.fullName)) {
-        this.fullNameIsValid = false;
-        this.isLoading = false;
-        return
       }
 
       //creating and assigning date
@@ -197,93 +544,82 @@ export default {
       this.signDate =
         currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
 
-      //inserting the school input
-      if (this.school === "outro") {
-        this.school = this.otherSchool;
-      }
-
       const newsignup = {
         date: this.signDate,
-        fullName: this.fullName,
-        email: this.email,
-        school: this.school,
+
+        //data from form
+        enrollSchool: this.enrollSchool,
+        enrollDate: this.enrollDate,
+        studentName: this.studentName,
+        studentAge: this.studentAge,
+        studentBirth: this.studentBirth,
+        studentBirthPlace: this.studentBirthPlace,
+        studentCitizenship: this.studentCitizenship,
+        studentPassportNumber: this.studentPassportNumber,
+        studentPassportExpiracy: this.studentPassportExpiracy,
+        studentPassportType: this.studentPassportType,
+        fatherName: this.fatherName,
+        motherName: this.motherName,
+        studentChronical: this.studentChronical,
+        studentMedicine: this.studentMedicine,
+        fatherPhone: this.fatherPhone,
+        motherPhone: this.motherPhone,
+        housePhone: this.housePhone,
+        companyPhone: this.companyPhone,
+        emergencyPhone: this.emergencyPhone,
+        addressNumber: this.addressNumber,
+        addressText: this.addressText,
+        sponsorName: this.sponsorName,
+        previousEAS: this.previousEAS,
+        japanGrade: this.japanGrade,
+        brazilGrade: this.brazilGrade,
+        stayJapan: this.stayJapan,
+        recommendedName: this.recommendedName,
+        speakPortuguese: this.speakPortuguese,
+        schoolBus: this.schoolBus,
       };
 
-      this.$store.dispatch("signup/signupStudent", newsignup);
+      const newStudent = {
+        enrollSchool: this.enrollSchool,
+        studentName: this.studentName,
+        studentRef: this.studentName.replaceAll(" ", ""),
+      };
+
+      this.$store.dispatch("signup/enrollStudent", newsignup);
+      this.$store.dispatch("signup/setStudentInList", newStudent);
       this.$emit("messageSent");
 
-      this.isLoading = false;  
+      this.isLoading = false;
 
       this.msgSent = true;
       setTimeout(() => {
         this.resetForm();
       }, 3000);
     },
-    createSchoolInscrito() {
-      //setting load page
-      this.isLoading = true;
-
-      //validate form to avoid bugs
-      this.formIsValid = true;
-
-      //validating form
-      if (this.schoolFullName === "" || this.numberStudents === null || this.numberTeachers === null || this.schoolMail === "") {
-        this.formIsValid = false;
-        this.isLoading = false;
-        return;
-      }
-
-      //check if the email is already subscribed
-      let emails = this.allEmailInscritos;
-      let schoolEmail = this.allSchoolEmail;
-      if (emails.includes(this.schoolEmail) || schoolEmail.includes(this.schoolEmail)) {
-        this.emailIsValid = false;
-        this.isLoading = false;
-        return
-      }
-
-      //check if the school is already subscribed
-      let schoolName = this.allSchoolName;
-      if (schoolName.includes(this.schoolFullName)) {
-        this.schoolFullNameIsValid = false;
-        this.isLoading = false;
-        return
-      }
-
-      //creating and assigning date
-      let currentDate = new Date();
-      let month = currentDate.getMonth() + 1;
-      this.signDate =
-        currentDate.getDate() + "/" + month + "/" + currentDate.getFullYear();
-
-      //inserting the school input
-      if (this.school === "outro") {
-        this.school = this.otherSchool;
-      }
-
-      const newSchool = {
-        schoolFullName: this.schoolFullName,
-        numberStudents: this.numberStudents,
-        numberTeachers: this.numberTeachers,
-        schoolEmail: this.schoolEmail,
-        date: this.signDate
-      };
-
-      this.$store.dispatch("signup/signupSchool", newSchool);
-      this.$emit("messageSent");
-
-      this.isLoading = false;  
-
-      this.msgSent = true;
-      setTimeout(() => {
-        this.resetForm();
-      }, 3000);
-    }
   },
 };
 </script>
 
 <style scoped>
+.normalbtn {
+  background-color: #ffffff77;
+  color: rgb(83, 83, 83);
+}
+.school-choose {
+  margin: 0.5rem;
+  padding: 1rem;
+  border: 0;
+  transition: all 0.1s ease-in-out;
+}
+
+.school-choose:active {
+  transform: scale(0.9);
+}
+.chosenbtn {
+  box-shadow: 0px 0px 3px 0px rgba(123, 123, 123, 0.55);
+  background-color: #24ae3975;
+}
+
 .formbtn {
   display: flex;
   width: 100%;
@@ -294,7 +630,7 @@ export default {
   padding: 1.5rem;
 }
 
-hr {
+.progressBar {
   border: 0px solid;
   border-radius: 30px;
   margin-top: 10px;
@@ -302,6 +638,7 @@ hr {
   background-color: greenyellow;
   height: 10px;
 }
+
 @keyframes countbar {
   0% {
     width: 100%;
@@ -350,6 +687,13 @@ label {
   text-align: left;
 }
 
+.schoolbtn {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
 input,
 select,
 textarea {
@@ -371,5 +715,19 @@ textarea:focus {
 .errors {
   color: red;
   font-style: italic;
+}
+
+span {
+  font-weight: bold;
+}
+
+hr {
+  margin: 4rem 0;
+  border: 2px solid #888;
+}
+
+.titulo {
+  font-weight: bold;
+  font-size: 20px;
 }
 </style>

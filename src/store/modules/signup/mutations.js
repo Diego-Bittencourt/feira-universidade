@@ -1,4 +1,15 @@
 export default {
+    setStudentData(state, payload) {
+        console.log("mutation", payload)
+        state.studentData = payload;
+    },
+    setStudentsList(state, payload) {
+        state.studentsList = payload;
+    },
+
+
+
+
     setInscritosList(state, payload) {
         state.inscritos = payload;
     },

@@ -1,50 +1,29 @@
 <template>
   <div>
+    <the-header></the-header>
     <base-card>
-      <div>
+      <div class="just">
         <h1>Bem-vindos!</h1>
         <p>
-          Este é o website dedicado ao evento da Feira das Universidades EAS
-          2022, realizado pelas Escolas Alegria de Saber.
+          Este é o sistema de pré-matrículas das Escolas Alegria de Saber - EAS.
         </p>
-        <p>Reconhecida pelo MEC.</p>
+        <p>
+          Para facilitar e poupar tempo, a EAS preparou esse sistema para
+          agilizar o processo de matrícula. Clicando
+          <span @click="routeForm">aqui</span>, você pode preencher a
+          pré-matrícula com seus dados de forma online, do celular, do tablet,
+          do computador em qualquer momento.
+          <br />
+          Ao vir realizar a matrícula na EAS, todos os seus dados já estão no
+          nosso sistema. Portanto, só será necessário assinar a matrícula já
+          preenchida.
+        </p>
+        <p>
+          Dessa forma, você garante
+          <span class="bold">educação brasileira e de qualidade no Japão</span>
+          de forma rápida e segura.
+        </p>
       </div>
-      <h1>Cronograma</h1>
-      <table>
-        <tr>
-          <td>10:30</td>
-          <td>Recepção das escolas (Alunos do Ensino Médio).</td>
-        </tr>
-        <tr>
-          <td>10:45</td>
-          <td>
-            Abertura do evento. Coordenador Geral das unidades EAS Sr. Habby
-            Ilerika.
-          </td>
-        </tr>
-        <tr>
-          <td>11:00</td>
-          <td>
-            Palestra Motivacional - Excelentíssimo Embaixador Cônsul-geral de
-            Nagoya, Luís Galvão Abbout
-          </td>
-        </tr>
-        <tr>
-          <td>11:30 às 14:00</td>
-          <td>Visitação aos estandes das universidades.</td>
-        </tr>
-        <tr>
-          <td>14:00</td>
-          <td>
-            Palestra sobre experiência em intercâmbio estudantil - Professor e
-            ex-aluno EAS Wataru Kawakami.
-          </td>
-        </tr>
-        <tr>
-          <td>14:30</td>
-          <td>Encerramento do evento - Coordenadora Geral Virgínia Morais.</td>
-        </tr>
-      </table>
     </base-card>
     <universities-list></universities-list>
   </div>
@@ -80,23 +59,10 @@ p {
 
 span {
   font-weight: bold;
+  cursor: default;
 }
 
-table {
-  border-collapse: collapse;
-}
-
-table td {
-  text-align: left;
-  border: 1px solid #333;
-  padding: 0 0.5rem;
-}
-
-tr {
-  transition: 0.3s all ease-in-out;
-}
-
-tr:hover {
-  background-color: #c2c2c2;
+.just {
+  text-align: justify;
 }
 </style>

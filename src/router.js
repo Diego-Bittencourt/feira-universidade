@@ -11,6 +11,8 @@ import EventoControle from './pages/evento/EventoControle.vue';
 import EventoDados from './components/registro/EventoDados.vue';
 import ControleEntrada from './components/registro/ControleEntrada.vue';
 import InscritosPresentes from './components/registro/InscritosPresentes.vue';
+import MatriculaMain from './pages/matricula/MatriculaMain.vue';
+import MatriculaList from './pages/matricula/MatriculaList.vue';
 
 
 //import the store to use on the navigation guards
@@ -19,6 +21,15 @@ import store from './store/index.js';
 const router = createRouter({
     history: createWebHistory(),
     routes: [
+        {
+            path: '/matricula',
+            component: MatriculaList,
+            //add navigations guards
+        },
+        {
+            path: '/matricula/studentdetails',
+            component: MatriculaMain
+        },
         {
             path: '/',
             component: LandingPage

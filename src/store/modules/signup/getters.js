@@ -1,4 +1,17 @@
 export default {
+    getStudentsList (state) {
+        return state.studentsList;
+    },
+    studentData (state) {
+        return state.studentData;
+    },
+
+
+
+
+
+
+    
     getInscritos(state) {
         return state.inscritos;
     },

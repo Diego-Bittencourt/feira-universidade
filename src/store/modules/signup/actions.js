@@ -1,12 +1,17 @@
 export default {
-    async signupStudent(context, payload) {
-
+    async enrollStudent(context, payload) {
         
         //creating the object
         const newsignup = payload;
-    
-        //create the post
-        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/inscritos.json`,
+
+        //create a student name reference
+        const studentRef = payload.studentName.replaceAll(' ', '');
+
+        //add the student ref to the object
+        newsignup.studentRef = studentRef;
+
+        //create the post request
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/matricula/${studentRef}.json`,
             {
                 method: "POST",
                 body: JSON.stringify(newsignup)
@@ -15,11 +20,110 @@ export default {
 
         const responseData = await response.json();
 
+        //check for errors
         if (!response.ok) {
             const error = new Error(responseData.message || 'Failed to send request');
-              throw error;
+            throw error;
         }
+    }, //end enroll student
+
+
+    //start set student on student list
+    async setStudentInList(context , payload) {
+
+        //grab the students info
+        const student = payload 
+
+        //create the post method
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/matricula/studentlist.json`, {
+            method: 'POST',
+            body: JSON.stringify(student)
+        })
+
+        //getting the server response
+        const responseData = await response.json();
+
+        //checking the response status
+        if (!response.ok) {
+            const error = new Error(responseData.message || 'Failed to fetch student list');
+            throw error;
+        }
+        
     },
+    //end post students list
+
+    //start fetch enroll students
+    async fetchStudentData(context, payload) {
+
+        //grab the studentRef for the link
+        const studentRef = payload;
+
+        //create the fetch
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/matricula/${studentRef}.json`);
+
+        //accessing the fetched data's response
+        const responseData = await response.json();
+
+        //error handling
+        if (!response.ok) {
+            const error = new Error(responseData.message || "Failed to fecth");
+            throw error;
+        }
+
+        let studentData = {};
+        for(const key in responseData) {
+            studentData = responseData[key];
+        }
+
+        context.commit('setStudentData', studentData);
+        
+    },
+    //end fetch enroll students
+
+    //start fetch students list
+    async fetchStudentsList(context) {
+
+        //create the fetch
+        const response = await fetch(`https://feira-universidades-default-rtdb.asia-southeast1.firebasedatabase.app/matricula/studentlist.json`);
+
+
+        //accessing the fetched data's response
+        const responseData = await response.json();
+
+        //error handling
+        if (!response.ok) {
+            const error = new Error(responseData.message || "Failed to fecth");
+            throw error;
+        }
+
+        const studentsList = [];
+
+        for (const key in responseData) {
+            const student = {
+                studentName: responseData[key].studentName,
+                enrollSchool: responseData[key].enrollSchool,
+                studentRef: responseData[key].studentRef
+            };
+
+            studentsList.push(student);
+        }
+
+        context.commit('setStudentsList', studentsList);
+
+    },
+    //end fetch students list
+
+
+
+
+
+
+
+
+
+
+
+
     async fetchInscritos(context) {
 
     

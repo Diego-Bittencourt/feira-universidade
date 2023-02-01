@@ -1,5 +1,6 @@
 <template>
-    <h1>Lista das Universidades Participantes</h1>
+    <div v-if="universityList.lenght > 0">
+        <h1>Lista dos Plantões de Matrícula</h1>
     <ul>
         <university-item
         v-for="uni in universityList"
@@ -9,7 +10,8 @@
         :link="uni.uniLink"
         :photo="uni.uniPhoto"></university-item>
     </ul>
-</template>
+    </div>
+    </template>
 
 
 <script>

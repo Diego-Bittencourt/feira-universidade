@@ -1,24 +1,19 @@
 <template>
-  <the-header></the-header>
   <div class="main">
-  <router-view v-slot="slotProps">
-    <transition name="route" mode="out-in">
-      <component :is="slotProps.Component"></component>
-    </transition>
-  </router-view>
+    <router-view v-slot="slotProps">
+      <transition name="route" mode="out-in">
+        <component :is="slotProps.Component"></component>
+      </transition>
+    </router-view>
   </div>
 </template>
 
 <script>
-
-export default {
-  
- 
-}
+export default {};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Oswald:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bungee+Spice&family=Oswald:wght@500&display=swap");
 
 html {
   font-size: 62.5%;
@@ -26,13 +21,13 @@ html {
 }
 
 body {
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   line-height: 1.4;
   /* max-width: 1200px; */
   width: 100vw;
   /* min-width: 300px; */
   margin: 0 auto;
-  background-image: url("./assets/slide.png");
+  background-image: url("./assets/blackboard.jpg");
   background-position: top center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /* Resize the background image to cover the entire container */
@@ -40,17 +35,17 @@ body {
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    font-family: inherit;
-    font-size: inherit;
-    line-height: inherit;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  box-sizing: border-box;
 }
 
 a,
 a:visited {
-    color: inherit;
+  color: inherit;
 }
 
 #app {
@@ -62,7 +57,7 @@ a:visited {
 }
 
 .main {
-  padding: 5rem 3rem 3rem 0;
+  padding: 0 3rem 3rem 0;
   min-height: calc(100vh - 75px);
   box-sizing: border-box;
   max-width: 1200px;
@@ -71,8 +66,8 @@ a:visited {
 
 ul,
 li {
-   text-indent: 0;
-   list-style-type: 0;
+  text-indent: 0;
+  list-style-type: 0;
 }
 
 /* router animation */
