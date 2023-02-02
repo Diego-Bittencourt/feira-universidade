@@ -170,7 +170,7 @@
           <tr>
             <td>Pessoa que indicou a escola</td>
             <td>
-              {{ studentData.ecommendedName }}
+              {{ studentData.recommendedName }}
             </td>
           </tr>
           <tr>
@@ -267,11 +267,16 @@
       </div>
     </div>
     <!-- wrapper for first part-->
+    <ficha-medica :student="studentData"></ficha-medica>
   </div>
 </template>
 
 <script>
+import FichaMedica from '../../components/formularios/FichaMedica.vue'
 export default {
+  components: {
+    FichaMedica
+  },
   computed: {
     studentData() {
       return this.$store.getters["signup/studentData"];

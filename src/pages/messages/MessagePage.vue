@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="wrap">
+    <the-header></the-header>
     <message-form></message-form>
   </div>
 </template>
@@ -24,6 +25,9 @@ export default {
 </script>
 
 <style scoped>
+.wrap {
+  padding-top: 9rem;
+}
 ul,
 li {
   text-indent: 0;

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
     <the-header></the-header>
     <base-card>
       <div class="just">
@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style scoped>
+.wrap {
+  padding-top: 9rem;
+}
 h1 {
   font-size: 2.4rem;
   margin-bottom: 2rem;

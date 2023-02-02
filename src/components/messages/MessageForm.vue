@@ -1,5 +1,5 @@
 <template>
-  <the-header></the-header>
+  
   <base-card v-if="msgSent && !isLoading">
     <div class="msgwrapper">
       <h2>Inscrição efetuada com sucesso.</h2>
@@ -577,6 +577,11 @@ export default {
         recommendedName: this.recommendedName,
         speakPortuguese: this.speakPortuguese,
         schoolBus: this.schoolBus,
+        medicalTreatment: this.medicalTreatment,
+        medicalAllergy: this.medicalAllergy,
+        medicalSurgery: this.medicalSurgery,
+        medicalDisability: this.medicalDisability,
+        noPE: this.noPe,
       };
 
       const newStudent = {

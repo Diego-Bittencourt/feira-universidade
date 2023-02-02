@@ -1,4 +1,5 @@
 <template>
+  <div class="wrap">
   <the-header></the-header>
   <base-card>
     <h1>Lista dos alunos prematriculados</h1>
@@ -19,6 +20,7 @@
       </tbody>
     </table>
   </base-card>
+  </div>
 </template>
 
 <script>
@@ -38,6 +40,9 @@ export default {
 </script>
 
 <style scoped>
+.wrap {
+  padding-top: 9rem;
+}
 table {
   background-color: white;
   color: black;
