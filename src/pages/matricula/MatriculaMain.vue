@@ -234,7 +234,7 @@
             <td></td>
           </tr>
           <tr>
-            <td>Kazei Shotoku Shomeisho (Familiar) no caso de Ensino Média</td>
+            <td>Kazei Shotoku Shomeisho (Familiar) no caso de Ensino Médio</td>
             <td></td>
             <td></td>
           </tr>

@@ -235,8 +235,17 @@
           <label for="companyPhone">Telefone da firma responsável</label>
           <input id="companyPhone" type="text" v-model.trim="companyPhone" />
         </div>
-
+        <hr />
         <!-- Emergency Phone-->
+        <h2>Contato de emergência</h2>
+        <div class="form-control">
+          <label for="emergencyName">Nome</label>
+          <input id="emergencyName" type="text" placeholder="Nome do contato de emergência" v-model.trim="emergencyName" />
+        </div>
+        <div class="form-control">
+          <label for="emergencyRelationship">Parentesco</label>
+          <input id="emergencyRelationship" type="text" placeholder="Parentesco do contato de emergência" v-model.trim="emergencyRelationship" />
+        </div>
         <div class="form-control">
           <label for="emergencyPhone">Telefone de emergência</label>
           <input
@@ -422,6 +431,11 @@
           <input type="text" id="noPe" v-model.trim="noPe" />
         </div>
 
+        <div class="form-control">
+          <label for="medicalDisease">Possui alguma doença crõnica ou congênita?</label>
+          <input type="text" id="medicalDisease" v-model.trim="medicalDisease" />
+        </div>
+
         <!--END OF INPUT / FORM VALIDATION-->
         <p class="errors" v-if="!formIsValid">
           Por favor, insira os dados corretamente.
@@ -459,6 +473,8 @@ export default {
       motherPhone: "",
       housePhone: "",
       companyPhone: "",
+      emergencyName: "",
+      emergencyRelationship: "",
       emergencyPhone: "",
       addressNumber: "",
       addressText: "",
@@ -475,6 +491,7 @@ export default {
       medicalAllergy: "",
       medicalSurgery: "",
       medicalDisability: "",
+      medicalDisease: "",
       noPe: "",
       enrollDate: "",
       startDate: "",
@@ -566,6 +583,8 @@ export default {
         motherPhone: this.motherPhone,
         housePhone: this.housePhone,
         companyPhone: this.companyPhone,
+        energencyName: this.emergencyName,
+        emergencyRelationship: this.emergencyRelationship,
         emergencyPhone: this.emergencyPhone,
         addressNumber: this.addressNumber,
         addressText: this.addressText,
@@ -581,6 +600,7 @@ export default {
         medicalAllergy: this.medicalAllergy,
         medicalSurgery: this.medicalSurgery,
         medicalDisability: this.medicalDisability,
+        medicalDisease: this.medicalDisease,
         noPE: this.noPe,
       };
 

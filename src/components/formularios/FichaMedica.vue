@@ -1,5 +1,5 @@
 <template>
-    <div class="whitepage">
+    <div class="medicalpage">
         <h1>FICHA MÉDICA</h1>
 
         <table>
@@ -11,67 +11,45 @@
                 </tr>
                 <tr>
                     <td>
-                        Data de Nascimento: {{ studentData.studentBirth }} Idade:{{studentData.studentAge}} Peso:_______ Altura:_______ Tipo sanguíneo:_____
+                        <p>Data de Nascimento: {{ studentData.studentBirth }}</p>
+                        <p>Idade:{{ studentData.studentAge }} Peso:_______ Altura:_______ Tipo sanguíneo:_____ </p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        O aluno é portador de necessidades específicas? ( ) sim / ( ) não. Tem laudo? _______________
+                        <p>O aluno é portador de necessidades específicas? </p>
+                        <p> {{ studentData.medicalDisability }}</p>
+                        <p>Tem laudo? _______________</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <p>Doenças que já teve: ( )catapora / ( )meningite / ( )hepatite / ( )rubéola / ( )pneumonia / (
-                            )bronquite</p>
-                        <p>Outra:_________________________________________________________________________________________
-                        </p>
+                        <p>Tem alergia? </p>
+                        <p>{{ studentData.medicalAllergy }}</p>
                     </td>
                 </tr>
+
                 <tr>
                     <td>
-                        <p>Tem alergia? ( )sim / ( )não</p>
-                        <p>( )na pele / ( )alimentar / ( )rinite / ( )medicamento</p>
-                        <p>Se sim,
-                            especifique:_______________________________________________________________________________
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Tem intolerância à lactose: ( )sim / ( )não Tem intolerância a gluten? ( )sim / ( )não
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p>O(A) aluno(a) possui alguma doença congênita? ( )sim / ( )não Se sim,
-                            qual?_________________________</p>
-                        <p>É epiléptico ( )sim / ( )não Se sim, qual o tratamento? __________________________________
-                        </p>
-                        <p>É hipertenso ( )sim / ( )não Se sim, qual o tratamento? __________________________________
-                        </p>
-                        <p>É asmático ( )sim / ( )não Se sim, qual o tratamento? __________________________________</p>
-                        <p>É diabético ( )sim / ( )não Se sim, qual o tratamento? __________________________________</p>
-                        <p>É cardíaco ( )sim / ( )não Se sim, qual o tratamento? __________________________________</p>
-                        <p>Já fez alguma cirurgia? Se sim,
-                            especifique:_______________________________________________________</p>
-                        <p>Está fazendo outro tipo de tratamento? Se sim, qual?
-                            _______________________________________________</p>
+                        <p>O(A) aluno(a) possui alguma doença congênita?</p>
+                        <p> {{ studentData.medicalDisease }}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <p>O(A) aluno(a) possui algum impedimento permanente para a prática esportiva de Educação
                             Física?</p>
-                        <p>( )sim / ( )não Se sim, qual?____________________________________________________________</p>
+                        <p>{{ studentData.noPE }}</p>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <p>Em caso de emergência, não conseguindo contatar os responsáveis deixar uma opção de contato:
                         </p>
-                        <p>Nome:____________________________________________ Parentesco:_____________________________
+                        <p>Nome: {{ studentData.emergencyName }}</p>
+                        <p>Parentesco: {{ studentData.emergencyRelationship }}
                         </p>
-                        <p>Telefone:___________________________________________</p>
+                        <p>Telefone: {{ studentData.emergencyPhone }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -87,7 +65,6 @@
                 </tr>
             </tbody>
         </table>
-        {{ studentData }}
 
     </div>
 </template>
@@ -103,12 +80,12 @@ export default {
 </script>
 
 <style scoped>
-.whitepage {
+.medicalpage {
     background-color: white;
     height: 29.7cm;
     width: 21cm;
     margin: 0.5rem auto;
-    padding: 0.2rem 3rem 2rem 2rem;
+    padding: 3rem 2rem;
 
 }
 
@@ -119,6 +96,7 @@ table:nth-child(1) {
 
 table {
     width: 100%;
+    margin-top: 3rem;
 }
 
 tr:nth-child(1) {
@@ -135,6 +113,7 @@ td {
     border: 1px solid black;
     border-collapse: collapse;
     text-align: left;
-    padding: 0.5rem 0.5rem;
+    padding: 0.8rem 0.5rem;
+    margin-bottom: 0.5rem;
 }
 </style>
